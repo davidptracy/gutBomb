@@ -5,8 +5,8 @@ var app = express();
 app.use(bodyParser());
 
 if (!module.parent) {
-  app.listen(3000);
-  console.log('Express started on port 3000');
+  app.listen(4000);
+  console.log('Express started on port 4000');
 }
 
 // ======================================================
@@ -56,9 +56,8 @@ var surveySchema = Schema({
 
 var alpha = 'abcdefghijklmnopqrstuvwxyz';
 
-var Survey= mongoose.model('Survey', surveySchema);
+var Survey = mongoose.model('Survey', surveySchema);
 var newSurvey;
-
 
 app.get('/', function(req, res) {
     res.send('Welcome to Survey');
