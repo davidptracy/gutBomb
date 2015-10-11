@@ -31,6 +31,8 @@ fs.readFile('test.json', 'utf8', function (err, data) {
   questions = JSON.parse(data);
   console.log(questions);
 });
+
+
 // ======================================================
 // ===============SET UP DATABASE SCHEMES================
 // ======================================================
@@ -38,10 +40,10 @@ fs.readFile('test.json', 'utf8', function (err, data) {
 
 var Schema = mongoose.Schema;
 
-// var answers={
-//   id : {type: String},                  
-//   answers : [{ type: String}],
-// });                      
+var answers={
+  id : {type: String},                  
+  answers : [{ type: String}],
+};                      
 
 var surveySchema = Schema({
    answers: [{ id : {type: String}, answers : [{ type: String}]}],                       

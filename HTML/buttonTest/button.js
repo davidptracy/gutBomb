@@ -1,9 +1,9 @@
-var mainColor, secondaryColor, origin, width, height, text;
-var margin;
-var selected;
+/* 
+The main button class 
+Requires p5.js > p5js.org
+*/
 
-
-//this is the constructor I think
+//this is the constructor
 function Button( _origin, _width, _height, _text, _mainColor){
 	this.origin 			= createVector(_origin.x, _origin.y);
 	this.width 				= _width;
@@ -60,10 +60,10 @@ Button.prototype.display = function(){
 
 		{
 			push();
-			translate(this.margin, this.margin*2);
-			fill(0);
-			textSize(32);
-			text(this.text,0,0);
+				translate(this.margin, this.margin*2);
+				fill(0);
+				textSize(32);
+				text(this.text,0,0);
 			pop();
 		
 		}
