@@ -1,4 +1,11 @@
-var origin, width, height, margin, selected, requiredAnswers;
+var jsonObject = 
+{"id":"2",
+"type":"1",
+"question":"What percentage of the total number of cells in your body are microbes?",
+"answers":["None","10-50%","50-100%","All of them"], 
+"images":["images/Ecoli.jpg", "images/Ecoli.jpg", "images/Ecoli.jpg", "images/Ecoli.jpg"]}
+
+var origin, width, height, margin, selected, requiredAnswers, hue;
 
 var currentQuestion;
 
@@ -13,20 +20,13 @@ var buttons = new Array();
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	origin = createVector(200,200);
-	width = 400;
-	height = 200;
-	margin = height*.25;
+
+	hue = 0;
 
 	//temp value
-	requiredAnswers = 2;
 
-	currentQuestion = "What percentage of the total number of cells in your body are microbes?"
 
-	var button 	= new Button(origin, width, height, "100%", [180, 204, 100]);
-	var button2	= new Button(origin.add(width+margin, 0), width, height, "None", [180, 204, 100]);
-	buttons.push(button);
-	buttons.push(button2);
+	setupButtons();
 
 	navBar = new NavigationBar();
 
@@ -47,10 +47,9 @@ function draw() {
 	};
 
 	navBar.display();
-	backButton.display();
-	forwardButton.display();
+	backButton.display(hue);
+	forwardButton.display(hue);
 	exitMenu.display();
-
 	checkAnswerCount();
 	// submitButton();
 
@@ -73,7 +72,22 @@ function mousePressed(){
 		
 		var fwdButtonLocation = forwardButton.getButtonLocation();
 		if (forwardButton.active){
-			if (dist(mouseX, mouseY, fwdButtonLocation.x, fwdButtonLocation.y) < 75/2) console.log("forward button clicked");
+			if (dist(mouseX, mouseY, fwdButtonLocation.x, fwdButtonLocation.y) < 75/2) {
+				console.log("forward button clicked");
+				clearButtons();
+				jsonObject = 
+					{"id":"1",
+					"type":"3",
+					"question":"Which of the following are considered microbes?",
+					"answers":["mite","E. coli","Ebola","fruit fly","cockroach"],
+					"images":["images/Ecoli.jpg", "images/Ecoli.jpg", "images/Ecoli.jpg", "images/Ecoli.jpg"]};
+				requiredAnswers = jsonObject.type;
+				currentQuestion = jsonObject.question;
+				hue += 36;
+				console.log("Hue: "+hue);
+				if (hue >= 360) hue = 0;
+				setupButtons();
+			}
 		}
 
 		var backButtonLocation = backButton.getButtonLocation();
@@ -114,8 +128,6 @@ function checkAnswerCount(){
 		forwardButton.active = false;
 	}
 
-	// console.log(answerCount);
-
 }
 
 function displayQuestion(_question){
@@ -135,14 +147,52 @@ function displayQuestion(_question){
 			textSize(18);
 			textAlign(CENTER, CENTER);
 			rectMode(CENTER);
-			text("[ Select "+requiredAnswers+ " Answers ]",0,0, windowWidth*.6, 100);
+			if(requiredAnswers > 1){
+				text("[ Select "+requiredAnswers+ " Answers ]",0,0, windowWidth*.6, 100);
+			} else {
+				text("[ Select "+requiredAnswers+ " Answer ]",0,0, windowWidth*.6, 100);
+			}
+			
 		pop();
 
 	pop();
 
 }
 
+function setupButtons(){
 
+	if (jsonObject.answers.length > 4){
+		height = windowHeight*.15;
+	} else {
+		height = windowHeight*.25;
+	}
+
+	requiredAnswers = jsonObject.type;
+	currentQuestion = jsonObject.question;
+	origin = createVector(windowWidth*.2, 200);
+	width = windowWidth*.3;
+	margin = height*.25;
+	images = jsonObject.images;
+
+	for (var i = 0; i < jsonObject.answers.length; i++) {
+
+		var button = new Button(origin, width, height, jsonObject.answers[i], [hue, 204, 100], images[i]);
+		buttons.push(button);
+
+		origin.x += width + margin;
+
+		if (origin.x > windowWidth*.6) {
+			origin.x = windowWidth*.2;
+			origin.y += height+margin;
+		} 
+	};
+}
+
+function clearButtons(){
+	for (var i = 0; i < buttons.length; i++) {
+		buttons.splice(buttons[i]);
+	};
+}
 
 // =================================================================
 // =================== AJAX CALL TO SERVER =========================
@@ -176,16 +226,3 @@ function submitAnswers() {
 
 // pull answers from response.answers array
 // pull images from response.images array 
-
-
-
-
-
-
-
-
-
-
-
-
-

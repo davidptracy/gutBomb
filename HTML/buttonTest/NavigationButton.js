@@ -12,12 +12,12 @@ function NavigationButton(_origin, _active, _direction){
 
 }
 
-NavigationButton.prototype.display = function(){
+NavigationButton.prototype.display = function(_hue){
 	
 	colorMode(HSB);
 
 	if (!this.active) fill(201,0,86);
-	else fill(180, 204, 100);
+	else fill(_hue, 204, 100);
 
 	push();
 		noStroke();

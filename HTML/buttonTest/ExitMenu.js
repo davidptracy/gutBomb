@@ -87,9 +87,7 @@ ExitMenu.prototype.display  = function(){
 					text("NO",0,0);	
 				pop();
 
-
 			pop();
-
 
 		pop();
 
