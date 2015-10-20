@@ -1,6 +1,8 @@
 var express = require('express');
 var bodyParser = require('body-parser')
 var app = express();
+var moment = require('moment');
+moment().format();
 
 app.use(bodyParser());
 
@@ -26,9 +28,18 @@ db.once('open', function callback () {
 // ======================================================
 var fs = require('fs');
 var questions;
+var responses = [];
+
 fs.readFile('test.json', 'utf8', function (err, data) {
   if (err) throw err;
   questions = JSON.parse(data);
+
+  for ( var i = 0; i < questions.questions.length; i++){
+    responses.push({
+        question: questions.questions[i],
+        responses: [] 
+    });
+  }
   console.log(questions);
 });
 
@@ -40,13 +51,13 @@ fs.readFile('test.json', 'utf8', function (err, data) {
 
 var Schema = mongoose.Schema;
 
-var answers={
+var answerSchema= Schema({
   id : {type: String},                  
-  answers : [{ type: String}],
-};                      
+  answers : [{ type: String}]
+});                      
 
 var surveySchema = Schema({
-   answers: [{ id : {type: String}, answers : [{ type: String}]}],                       
+   answers: [answerSchema],                       
    timedate: { type: Date, default: Date.now },
    surveyVersion: {type:String}
 });
@@ -59,6 +70,8 @@ var surveySchema = Schema({
 var alpha = 'abcdefghijklmnopqrstuvwxyz';
 
 var Survey = mongoose.model('Survey', surveySchema);
+var Answer = mongoose.model('Answer', answerSchema);
+
 var newSurvey;
 
 app.get('/', function(req, res) {
@@ -69,29 +82,123 @@ app.get('/', function(req, res) {
 // =====================NEW SURVEY=======================
 // ======================================================
 
-app.get('/newSurvey', function(req, res) { 
+var curQuestion = 0; 
+
+
+//newSurvey sends question : 0
+
+app.get('/new', function(req, res) { 
   newSurvey = new Survey();
-  console.log("New Survey at : " + newSurvey.timedate );
-  res.end("New Survery :" + newSurvey.timedate + " Logged");
+  newSurvey.surveyVersion = questions.version;
+  console.log("New Survey at : " + newSurvey.timedate + " version: " + newSurvey.surveyVersion);
+  res.end(JSON.stringify(responses[curQuestion]));
 });
 
 // ======================================================
 // =====================QUESTIONS========================
 // ======================================================
 
-app.get('/:question', function(req, res){
-  if (req.params.question == "1")  newSurvey.surveyVersion = questions.version;
-  console.log(JSON.stringify(questions.questions[req.params.question]));
-  var response =  JSON.stringify(questions.questions[req.params.question].question) + '\n';
-  for ( var i = 0 ; i<questions.questions[req.params.question].answers.length; i++){
-     response+= " " + alpha.charAt(i) + ": "+  JSON.stringify(questions.questions[req.params.question].answers[i]) + '\n';
-  }
-  //console.log(response);
-  res.send(JSON.stringify(questions.questions[req.params.question]));
+//answers are formatted like this for now: http://localhost:3000/next?a1=a&a2=c
 
-  res.end();
+app.get('/next', function(req, res){
+
+  if (Object.keys(req.query).length>0){
+      var newAnswer = {
+        id : curQuestion,
+        answers : []
+      }
+      for (var key in req.query){
+          newAnswer.answers.push(req.query[key]);
+      }
+      if (responses[curQuestion]){
+        responses[curQuestion].responses = newAnswer.answers;
+        console.log("last question: ");
+        console.log(responses[curQuestion]);
+      }
+  }
+  curQuestion++;
+  res.end(JSON.stringify(responses[curQuestion]));
 
 })
+
+app.get('/back', function(req, res){
+  curQuestion-- ;
+  console.log(responses[curQuestion]);
+  //var response =  JSON.stringify(responses[curQuestion].question) + '\n';
+  res.end(JSON.stringify(responses[curQuestion]));
+
+})
+
+
+app.get('/reset', function(req, res){
+  curQuestion = 0;
+  submitSurvey();
+  res.end(JSON.stringify(newSurvey));
+
+})
+
+var submitSurvey = function(){
+  for ( var i = 0 ; i<responses.length; i++){
+      var mAnswer = new Answer();
+      mAnswer.id = responses[i].question.id;
+      mAnswer.answers = responses[i].responses
+      console.log(mAnswer);
+      newSurvey.answers[i] = mAnswer;
+  }
+  newSurvey.save(function (err) {
+      if (err){
+          console.log('Error on save!');
+      }else{
+          console.log(newSurvey);
+          console.log("Survey saved!");
+      }
+    });
+}
+
+// find all surveys in date range
+app.get('/find', function(req, res){
+var today = moment().startOf('day').local(),
+    tomorrow = moment(today).add(1, 'days');
+
+  Survey.find({
+        surveyVersion: 'timestamp',
+
+      timedate: {
+        $gte: today.toDate(),
+        $lt: tomorrow.toDate()
+      }
+  }).
+  exec(process);
+  res.end();
+});
+
+var process= function (err, results){
+  if (err) return handleError(err);
+  // createCSV(results);
+  var info = []; 
+  for (var i = 0; i< results.length; i++){
+      var newLine = [];
+      for ( var j = 0; j< results[i].answers.length; j++){
+          newLine.push({
+            id: results[i].answers[i].id,
+            answers: results[i].answers[i].answers
+          });
+      }
+      info.push(newLine);
+  }
+  
+  console.log(results)
+  console.log(info);
+}
+
+
+//clear the days/weels surveys
+app.get('/clear', function ( req, res){
+  Survey.remove({}, function(err) { 
+     console.log('collection removed') 
+  });
+  res.end();
+});
 
 
 //check question has been logged already
@@ -99,35 +206,6 @@ app.get('/:question', function(req, res){
 // getJson(/:questions, function(data)){
 //   data.response, data.survey
 // }
-
-// ======================================================
-// =====================ANSWERS==========================
-// ======================================================
-//answers are formatted like this for now: http://localhost:3000/answer/1?a1=1&a2=3
-
-app.get('/answer/:question', function(req, res){
-  // console.log(JSON.stringify(questions.questions[req.params.question]));
-  // console.log(Object.keys(req.query));
-  // console.log(req.query);
-  var newAnswer = {
-     id : req.params.question,
-     answers : []
-  }
-  for (var key in req.query){
-      newAnswer.answers.push(req.query[key]);
-  }
-  
-  newSurvey.answers.push(newAnswer);
-  console.log(newSurvey);
-  console.log(newSurvey.answers);
-  res.send(JSON.stringify(newSurvey.answers));
-  res.end();
-})
-
-// ======================================================
-// =====================POST SURVEY======================
-// ======================================================
-
 
 
 
