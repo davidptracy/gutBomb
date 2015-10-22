@@ -9,6 +9,7 @@ var origin, width, height, margin, selected, requiredAnswers, hue;
 
 var currentQuestion;
 
+
 var exitMenu;
 
 var navBar;
@@ -17,14 +18,12 @@ var backButton;
 var forwardButton;
 
 var buttons = new Array();
+var selectedAnswers = new Array();
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 
 	hue = 0;
-
-	//temp value
-
 
 	setupButtons();
 
@@ -63,6 +62,9 @@ function mousePressed(){
 			if (mouseX > buttons[i].origin.x && mouseX < buttons[i].origin.x+buttons[i].width){
 				if (mouseY > buttons[i].origin.y && mouseY < buttons[i].origin.y+buttons[i].height){
 					buttons[i].selected = !buttons[i].selected;
+					if (buttons[i].selected){
+
+					}
 				}
 			}
 		};
@@ -74,15 +76,43 @@ function mousePressed(){
 		if (forwardButton.active){
 			if (dist(mouseX, mouseY, fwdButtonLocation.x, fwdButtonLocation.y) < 75/2) {
 				console.log("forward button clicked");
+
+				// var answerString = "";
+
+				// // loop through all of the selected buttons
+				// for (var i = 0; i < buttons.length; i++) {
+				// 	if (buttons[i].selected){
+				// 		if (answerString.length < 1){
+				// 			// if there hasn't been anything added to the answer string, add it
+				// 			answerString.concat("?a"+[i]+"=1");
+				// 			console.log(answerString);
+				// 		} else {
+				// 			// if the answer string already has some content, include and ampersand first
+				// 			answerString.concat("&a"+[i]+"=1");
+				// 		}						
+				// 	}
+				// };
+
+				checkButtons(submitAnswers);
+
+				//answers are formatted like this for now: http://localhost:3000/next?a1=a&a2=c
+
+				// submitAnswer("answerString");
+								
+
+				// get the next quest from server
+
+
+				// jsonObject = 
+				// 	{"id":"1",
+				// 	"type":"3",
+				// 	"question":"Which of the following are considered microbes?",
+				// 	"answers":["mite","E. coli","Ebola","fruit fly","cockroach"],
+				// 	"images":["images/Ecoli.jpg", "images/Ecoli.jpg", "images/Ecoli.jpg", "images/Ecoli.jpg"]};
+				// requiredAnswers = jsonObject.type;
+				// currentQuestion = jsonObject.question;
+
 				clearButtons();
-				jsonObject = 
-					{"id":"1",
-					"type":"3",
-					"question":"Which of the following are considered microbes?",
-					"answers":["mite","E. coli","Ebola","fruit fly","cockroach"],
-					"images":["images/Ecoli.jpg", "images/Ecoli.jpg", "images/Ecoli.jpg", "images/Ecoli.jpg"]};
-				requiredAnswers = jsonObject.type;
-				currentQuestion = jsonObject.question;
 				hue += 36;
 				console.log("Hue: "+hue);
 				if (hue >= 360) hue = 0;
@@ -113,6 +143,30 @@ function mousePressed(){
 		}
 	}
 }
+
+
+var checkButtons = function(callback){
+
+	var answerString = "";
+
+	// loop through all of the selected buttons
+	for (var i = 0; i < buttons.length; i++) {
+		if (buttons[i].selected){
+			if (answerString.length == 0){
+				// if there hasn't been anything added to the answer string, add it
+				answerString = "?a"+[i]+"=1";
+			} else {
+				// if the answer string already has some content, include and ampersand first
+				answerString.concat("&a"+[i]+"=1");
+			}						
+		}
+	};
+
+	console.log("http://localhost:4000/next"+answerString);
+	callback("http://localhost:4000/next"+answerString);
+
+}
+
 
 function checkAnswerCount(){
 
@@ -174,6 +228,8 @@ function setupButtons(){
 	margin = height*.25;
 	images = jsonObject.images;
 
+	var selectedAnswers = new Array(jsonObject.answers.length);
+
 	for (var i = 0; i < jsonObject.answers.length; i++) {
 
 		var button = new Button(origin, width, height, jsonObject.answers[i], [hue, 204, 100], images[i]);
@@ -198,16 +254,18 @@ function clearButtons(){
 // =================== AJAX CALL TO SERVER =========================
 // =================================================================
 
-function submitAnswers() {
-  var xhttp = new XMLHttpRequest();
+function submitAnswers(_answerString) {
+  var xhttp = new XMLHttpRequest();  
+
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
-     document.getElementById("demo").innerHTML = xhttp.responseText;
+    	console.log (xhttp.responseText);
     }
   }
 
   //submit
-  xhttp.open("GET", "ajax_info.txt", true);
+  console.log("Sending: "+_answerString);
+  xhttp.open("GET", _answerString, true);
   xhttp.send();
 
 }
