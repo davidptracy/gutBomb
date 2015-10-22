@@ -11,7 +11,8 @@
             "Ebola",
             "fruit fly",
             "cockroach"
-         ]
+         ],
+         "images": []
       },
       {  
          "id":"2",
@@ -22,7 +23,8 @@
             "10-50%",
             "50-100%",
             "All of them"
-         ]
+         ],
+         "images": []
       },
       {  
          "id":"3",
@@ -34,7 +36,8 @@
             "a TV",
             "a pillow",
             "a flower pot"
-         ]
+         ],
+         "images": []
       }
    ]
 }

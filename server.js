@@ -37,7 +37,8 @@ fs.readFile('test.json', 'utf8', function (err, data) {
   for ( var i = 0; i < questions.questions.length; i++){
     responses.push({
         question: questions.questions[i],
-        responses: [] 
+        responses: [],
+        length: questions.questions.length
     });
   }
   console.log(questions);

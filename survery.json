@@ -12,7 +12,16 @@
             "string"
          ],
          "rangeMin":0,
-         "rangeMax":10
+         "rangeMax":10,
+         "image" : [
+            "string/string",
+            "string/string",
+            "string/string"
+         ]
       }
    ]
 }
+
+
+
+
