@@ -19,6 +19,22 @@ function Button( _origin, _width, _height, _text, _mainColor, _image){
 	} else {
 		this.hasImage		= false;
 	}
+
+	this.tWidth 				= textWidth(this.text);
+	this.boundingWidth 			= this.width-this.margin*2;
+
+	this.textScale				= 1.0;
+
+	if (this.tWidth > this.boundingWidth ){
+		console.log(this.boundingWidth);
+		console.log(this.tWidth);
+		console.log("=========");
+		this.textScale = this.boundingWidth/this.tWidth;
+	}
+
+	console.log(this.textScale);
+
+
 }
 
 Button.prototype.display = function(){
@@ -50,20 +66,21 @@ Button.prototype.display = function(){
 		
 		if (!this.hasImage){
 			push();
-				translate(this.margin, this.margin);
+				translate(this.margin, this.margin/2);
 				fill(0);
-				textSize(32);
-				textAlign(LEFT, TOP);
-				text(this.text,0,0);
+				textSize(22*this.textScale);
+				textAlign(LEFT, CENTER);
+				// rect(0,0, this.width-this.margin*2, this.height-this.margin*2);
+				text(this.text,0,0, this.width-this.margin*2, this.height-this.margin*2);
 			pop();
 		} else {
 			push();
 				image(this.image,0,0, this.height-this.margin, this.height-this.margin);
 			pop();
 			push();
-				translate(this.margin*3, this.margin);
+				translate(this.margin*3+10, this.margin);
 				fill(0);
-				textSize(32);
+				textSize(22*this.textScale);
 				textAlign(LEFT, TOP);
 				text(this.text,0,0);
 			pop();
@@ -82,20 +99,21 @@ Button.prototype.display = function(){
 		
 			if (!this.hasImage){
 				push();
-				translate(this.margin, this.margin);
-				fill(0);
-				textSize(32);
-				textAlign(LEFT, TOP);
-				text(this.text,0,0);
+					translate(this.margin, this.margin/2);
+					fill(0);
+					textSize(22*this.textScale);
+					textAlign(LEFT, CENTER);
+					// rect(0,0, this.width-this.margin*2, this.height-this.margin*2);
+					text(this.text,0,0, this.width-this.margin*2, this.height-this.margin*2);
 				pop();
 			} else {
 				push();
 					image(this.image,0,0, this.height-this.margin, this.height-this.margin);
 				pop();
 				push();
-					translate(this.margin*3, this.margin);
+					translate(this.margin*3+10, this.margin);
 					fill(0);
-					textSize(32);
+					textSize(22*this.textScale);
 					textAlign(LEFT, TOP);
 					text(this.text,0,0);
 				pop();

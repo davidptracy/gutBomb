@@ -194,8 +194,6 @@ function checkAnswerCount(){
 			forwardButton.active = false;
 		}		
 	}
-
-
 }
 
 function displayQuestion(_question){
@@ -204,10 +202,10 @@ function displayQuestion(_question){
 		translate(windowWidth/2, 65);
 		translate(this.buttonWidth/2, this.buttonHeight/2);
 		fill(0);
-		textSize(36);
+		textSize(32);
 		textAlign(CENTER, CENTER);
 		rectMode(CENTER);
-		text(currentQuestion,0,0, windowWidth*.6, 75);	
+		text(currentQuestion,0,0, windowWidth*.85, 75);	
 		
 		push();
 			translate(0,75);
