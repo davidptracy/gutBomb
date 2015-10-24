@@ -5,8 +5,8 @@ connect all the pieces
 
 */
 
-var jsonObject = 
-{"question":{"id":"1","type":"multiple","question":"Which of the following are considered microbes?","answers":["mite","E. coli","Ebola","fruit fly","cockroach"],"images":[]},"responses":[],"length":14}
+var jsonObject = {"question":{"id":"1","type":"multiple","question":"Which of the following are considered microbes?","answers":["mite","E. coli","Ebola","fruit fly","cockroach"],"image":["images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg"]},"responses":[],"length":14};
+
 
 var jsonObject;
 
@@ -186,6 +186,7 @@ function checkAnswerCount(){
 
 	if (requiredAnswers == 'multiple'){
 		if (answerCount > 0) forwardButton.active = true;
+		else forwardButton.active = false;
 	} else {
 		if (answerCount == requiredAnswers){
 			forwardButton.active = true;
@@ -240,14 +241,22 @@ function setupButtons(){
 	origin = createVector(windowWidth*.2, 200);
 	width = windowWidth*.3;
 	margin = height*.25;
-	images = jsonObject.images;
+	images = jsonObject.question.image;
 
 	var selectedAnswers = new Array(jsonObject.question.answers.length);
 
 	for (var i = 0; i < jsonObject.question.answers.length; i++) {
 
-		var button = new Button(origin, width, height, jsonObject.question.answers[i], [hue, 204, 100], jsonObject.question.images[i]);
-		buttons.push(button);
+		// var theImage;
+
+		// loadImage(images[i], function(img){
+		// 	theImage = img;
+		// 	console.log("loaded");
+			
+		// });
+
+		var button = new Button(origin, width, height, jsonObject.question.answers[i], [hue, 204, 100], images[i]);
+		buttons.push(button);		
 
 		origin.x += width + margin;
 

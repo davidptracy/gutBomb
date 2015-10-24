@@ -12,12 +12,12 @@
             "fruit fly",
             "cockroach"
          ],
-         "images": [
-            "images/01/Ecoli.jpg", 
-            "images/01/Ecoli.jpg", 
-            "images/01/Ecoli.jpg", 
-            "images/01/Ecoli.jpg", 
-            "images/01/Ecoli.jpg"
+         "image": [
+            "images/01/01_Ecoli.jpg", 
+            "images/01/01_Ecoli.jpg", 
+            "images/01/01_Ecoli.jpg", 
+            "images/01/01_Ecoli.jpg", 
+            "images/01/05_Cockroach.jpg"
          ]
       },
       {  
@@ -30,7 +30,7 @@
             "a majority, more than 51%",
             "All of them, 100%"
          ],
-         "images": []
+         "image": []
       },{
          "id": "3",
          "type": "5",
@@ -54,7 +54,7 @@
             "a pillow",
             "a flower pot"
          ],
-         "images": []
+         "image": []
       },{
          "id": "5",
          "type": "multiple",

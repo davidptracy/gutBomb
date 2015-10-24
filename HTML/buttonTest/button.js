@@ -12,26 +12,13 @@ function Button( _origin, _width, _height, _text, _mainColor, _image){
 	this.text 				= _text;
 	this.mainColor 			= _mainColor;
 	this.selected 			= false;
-	this.image 				= loadImage("images/01/Ecoli.jpg");
-	console.log(_image);
 
-	// this.image 				= loadImage(_image, function(){console.log("success")}, function(){"error"});
-	// loadImage("images/01/Ecoli.jpg", function(img){		
-	// 	// this.image = _image;
-	// 	this.image = "images/01/Ecoli.jpg";
-	// }, function(error){
-	// 	console.log("failed to load image");
-	// });
-
-	if (this.image !== null){
-		this.hasImage = true;
-	} else { 
-		this.hasImage = false;
+	if (_image){
+		this.image 			= loadImage(_image);
+		this.hasImage 		= true;		
+	} else {
+		this.hasImage		= false;
 	}
-	// console.log(_image);
-	// console.log(typeof(_image));
-	// console.log("images/01/Ecoli.jpg")
-
 }
 
 Button.prototype.display = function(){
@@ -71,9 +58,7 @@ Button.prototype.display = function(){
 			pop();
 		} else {
 			push();
-				translate(10,10);
-				imageMode(CENTER);
-				image(this.image,0,0);
+				image(this.image,0,0, this.height-this.margin, this.height-this.margin);
 			pop();
 			push();
 				translate(this.margin*3, this.margin);
@@ -105,11 +90,14 @@ Button.prototype.display = function(){
 				pop();
 			} else {
 				push();
-				translate(this.margin*3, this.margin);
-				fill(0);
-				textSize(32);
-				textAlign(LEFT, TOP);
-				text(this.text,0,0);
+					image(this.image,0,0, this.height-this.margin, this.height-this.margin);
+				pop();
+				push();
+					translate(this.margin*3, this.margin);
+					fill(0);
+					textSize(32);
+					textAlign(LEFT, TOP);
+					text(this.text,0,0);
 				pop();
 			}
 
