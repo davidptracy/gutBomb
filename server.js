@@ -79,8 +79,12 @@ var html_dir = 'HTML/buttonTest/';
 
 
 app.get('/', function(req, res) {
-    res.sendfile(html_dir + 'button.html');
+    res.sendfile(html_dir + 'welcome.html');
 });
+
+app.get('/survey', function(req,res){
+    res.sendfile(html_dir + 'button.html');  
+})
 
 app.get('/HTML/:fileName',function(req,res){
   var filename = req.params.fileName;

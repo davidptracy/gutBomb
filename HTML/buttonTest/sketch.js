@@ -1,14 +1,20 @@
+/* TO DO
+
+slider bar
+connect all the pieces
+
+*/
+
 var jsonObject = 
-{"id":"2",
-"type":"1",
-"question":"What percentage of the total number of cells in your body are microbes?",
-"answers":["None","10-50%","50-100%","All of them"], 
-"images":["images/Ecoli.jpg", "images/Ecoli.jpg", "images/Ecoli.jpg", "images/Ecoli.jpg"]}
+{"question":{"id":"1","type":"multiple","question":"Which of the following are considered microbes?","answers":["mite","E. coli","Ebola","fruit fly","cockroach"],"images":[]},"responses":[],"length":14}
+
+var jsonObject;
+
+var created;
 
 var origin, width, height, margin, selected, requiredAnswers, hue;
 
 var currentQuestion;
-
 
 var exitMenu;
 
@@ -22,6 +28,8 @@ var selectedAnswers = new Array();
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
+
+	created = true;
 
 	hue = 0;
 
@@ -75,7 +83,7 @@ function mousePressed(){
 		var fwdButtonLocation = forwardButton.getButtonLocation();
 		if (forwardButton.active){
 			if (dist(mouseX, mouseY, fwdButtonLocation.x, fwdButtonLocation.y) < 75/2) {
-				console.log("forward button clicked");
+				// console.log("forward button clicked");
 
 				// var answerString = "";
 
@@ -114,9 +122,9 @@ function mousePressed(){
 
 				clearButtons();
 				hue += 36;
-				console.log("Hue: "+hue);
+				// console.log("Hue: "+hue);
 				if (hue >= 360) hue = 0;
-				setupButtons();
+				// setupButtons();
 			}
 		}
 
@@ -162,7 +170,7 @@ var checkButtons = function(callback){
 		}
 	};
 
-	console.log("http://localhost:4000/next"+answerString);
+	// console.log("http://localhost:4000/next"+answerString);
 	callback("http://localhost:4000/next"+answerString);
 
 }
@@ -176,11 +184,16 @@ function checkAnswerCount(){
 		if (buttons[i].selected) answerCount++;
 	};
 
-	if (answerCount == requiredAnswers){
-		forwardButton.active = true;
+	if (requiredAnswers == 'multiple'){
+		if (answerCount > 0) forwardButton.active = true;
 	} else {
-		forwardButton.active = false;
+		if (answerCount == requiredAnswers){
+			forwardButton.active = true;
+		} else {
+			forwardButton.active = false;
+		}		
 	}
+
 
 }
 
@@ -215,24 +228,25 @@ function displayQuestion(_question){
 
 function setupButtons(){
 
-	if (jsonObject.answers.length > 4){
+
+	if (jsonObject.question.answers.length > 4){
 		height = windowHeight*.15;
 	} else {
 		height = windowHeight*.25;
 	}
 
-	requiredAnswers = jsonObject.type;
-	currentQuestion = jsonObject.question;
+	requiredAnswers = jsonObject.question.type;
+	currentQuestion = jsonObject.question.question;
 	origin = createVector(windowWidth*.2, 200);
 	width = windowWidth*.3;
 	margin = height*.25;
 	images = jsonObject.images;
 
-	var selectedAnswers = new Array(jsonObject.answers.length);
+	var selectedAnswers = new Array(jsonObject.question.answers.length);
 
-	for (var i = 0; i < jsonObject.answers.length; i++) {
+	for (var i = 0; i < jsonObject.question.answers.length; i++) {
 
-		var button = new Button(origin, width, height, jsonObject.answers[i], [hue, 204, 100], images[i]);
+		var button = new Button(origin, width, height, jsonObject.question.answers[i], [hue, 204, 100], jsonObject.question.images[i]);
 		buttons.push(button);
 
 		origin.x += width + margin;
@@ -259,7 +273,14 @@ function submitAnswers(_answerString) {
 
   xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4 && xhttp.status == 200) {
+    	
     	console.log (xhttp.responseText);
+    	jsonObject = JSON.parse(xhttp.responseText);
+    	
+    	
+    	clearButtons();
+    	setTimeout(setupButtons, 25);
+    	// setupButtons();
     }
   }
 
@@ -270,17 +291,11 @@ function submitAnswers(_answerString) {
 
 }
 
+setTimeout(function(){
 
-// =================================================================
-// ======================= JSON PARSING ============================
-// =================================================================
-
-// var response;
-// var question 		= response.id;
-// var numberOfAnswers	= 2;
-// var question 		= response.question;
-// var answers 		= response.answers;
-// var images			= response.images;
-
-// pull answers from response.answers array
-// pull images from response.images array 
+	if (created){
+		console.log("sending AJAX request for new survey");
+		submitAnswers("/new");
+	}
+	created = false;
+}, 25);
