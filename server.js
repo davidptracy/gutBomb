@@ -124,7 +124,7 @@ app.get('/next', function(req, res){
         answers : []
       }
       for (var key in req.query){
-          newAnswer.answers.push(req.query[key]);
+         newAnswer.answers.push(req.query[key]);
       }
       if (responses[curQuestion]){
         responses[curQuestion].responses = newAnswer.answers;
@@ -191,20 +191,22 @@ var today = moment().startOf('day').local(),
 var process= function (err, results){
   if (err) return handleError(err);
   // createCSV(results);
-  var info = []; 
-  for (var i = 0; i< results.length; i++){
-      var newLine = [];
-      for ( var j = 0; j< results[i].answers.length; j++){
-          newLine.push({
-            id: results[i].answers[i].id,
-            answers: results[i].answers[i].answers
-          });
-      }
-      info.push(newLine);
-  }
+  // var info = []; 
+  // for (var i = 0; i< results.length; i++){
+  //     var newLine = [];
+  //     for ( var j = 0; j< results[i].answers.length; j++){
+  //         newLine.push({
+  //           id: results[i].answers[i].id,
+  //           answers: results[i].answers[i].answers
+  //         });
+  //     }
+  //     info.push(newLine);
+  // }
   
-  console.log(results)
-  console.log(info);
+  var csv = convertArrayOfObjectsToCSV(results)
+  //console.log(csv);
+  //console.log(results);
+  //console.log(info);
 }
 
 
@@ -215,6 +217,77 @@ app.get('/clear', function ( req, res){
   });
   res.end();
 });
+
+
+
+function convertArrayOfObjectsToCSV(args) {  
+    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+    // data = args.data;
+
+    data = args
+    console.log(data[0])
+    columnDelimiter  = ',';
+    lineDelimiter    =  '\n';
+    // set up initial csv column keys
+    var keys = "surveyVersion,timestamp" ;
+    var allAnswers = questions.questions;
+    for( var i = 0; i<allAnswers.length; i++){
+        for( var j = 0; j < allAnswers[i].answers.length; j++){
+            var key = 'q';
+            var qNum = i+1;
+            var aNum = j+1;
+            key += qNum.toString() + 'a' + aNum.toString();
+            keys += columnDelimiter + key;
+        }
+    }
+
+    result = '';
+    result += keys
+    result += lineDelimiter;
+    // console.log(result);
+
+    // add response data
+    for ( var i = 0; i< data.length; i++){  
+        result += data[i].surveyVersion + columnDelimiter;
+        result += data[i].timedate + columnDelimiter;
+        var answers = data[i].answers;
+        for (var j = 0; j<answers.length; j++){
+            if (answers[j].answers.length == 0){
+                  var n = 0;
+                  allAnswers[j].answers.forEach(function(a){
+                      result +=  '' + columnDelimiter;
+                      n++;
+                  });
+            }else{
+                                // recievedAns.push(answers[j].answers[x].slice(-1));
+                var recievedAns = [];
+               for (var x = 0; x< answers[j].answers.length; x++){
+                  var key = 'q';
+                  var qNum = j+1;
+                  key+= qNum;
+                  result+= key + answers[j].answers[x]+columnDelimiter;
+
+                  recievedAns.push(answers[j].answers[x].slice(-1));
+                }
+                console.log(recievedAns);
+            }
+        }
+        result += lineDelimiter
+    }
+    console.log(result);
+    // data.forEach(function(item) {
+    //     ctr = 0;
+    //     keys.forEach(function(key) {
+    //         if (ctr > 0) result += columnDelimiter;
+
+    //         result += item[key];
+    //         ctr++;
+    //     });
+    //     result += lineDelimiter;
+    // });
+
+    return result;
+}
 
 
 //check question has been logged already

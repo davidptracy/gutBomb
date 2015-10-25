@@ -33,7 +33,7 @@
          "image": []
       },{
          "id": "3",
-         "type": "5",
+         "type": "multiple",
          "question": "If we told you that microbes live on your skin, and that every human has a different set of microbes, which of the following factors do you think might influence these differences?",
          "answers": [
             "diet",
