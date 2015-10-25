@@ -26,13 +26,9 @@ function Button( _origin, _width, _height, _text, _mainColor, _image){
 	this.textScale				= 1.0;
 
 	if (this.tWidth > this.boundingWidth ){
-		console.log(this.boundingWidth);
-		console.log(this.tWidth);
-		console.log("=========");
 		this.textScale = this.boundingWidth/this.tWidth;
 	}
 
-	console.log(this.textScale);
 
 
 }

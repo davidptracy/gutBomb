@@ -1,58 +1,44 @@
 /* TO DO
 
 slider bar
-connect all the pieces
 
 */
 
 var jsonObject = {"question":{"id":"1","type":"multiple","question":"Which of the following are considered microbes?","answers":["mite","E. coli","Ebola","fruit fly","cockroach"],"image":["images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg"]},"responses":[],"length":14};
-
-
-var jsonObject;
-
 var created;
-
 var origin, width, height, margin, selected, requiredAnswers, hue;
-
 var currentQuestion;
-
+var currentQuestionId;
+var totalQuestions;
 var exitMenu;
-
 var navBar;
-
 var backButton;
 var forwardButton;
-
 var buttons = new Array();
 var selectedAnswers = new Array();
+var lastButtonSelected;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-
 	created = true;
-
 	hue = 0;
-
 	setupButtons();
-
 	navBar = new NavigationBar();
-
 	backButton = new NavigationButton(createVector(50, windowHeight/2), true, -1);
 	forwardButton = new NavigationButton(createVector(windowWidth-50, windowHeight/2 ), false, 1);
-
 	exitMenu = new ExitMenu(createVector(windowWidth/2, windowHeight*.35));
-
+	currentQuestionId = parseInt(jsonObject.question.id);
+	totalQuestions  = parseInt(jsonObject.length);
 }
 
 function draw() {
 	background(255);
-
 	displayQuestion();
-
 	for (var i = 0; i < buttons.length; i++) {
 		buttons[i].display();
 	};
 
+	navBar.update(totalQuestions, currentQuestionId);	
 	navBar.display();
 	backButton.display(hue);
 	forwardButton.display(hue);
@@ -71,7 +57,11 @@ function mousePressed(){
 				if (mouseY > buttons[i].origin.y && mouseY < buttons[i].origin.y+buttons[i].height){
 					buttons[i].selected = !buttons[i].selected;
 					if (buttons[i].selected){
-
+						if (forwardButton.active && requiredAnswers!== 'multiple'){
+							buttons[lastButtonSelected].selected = false;
+						}
+						lastButtonSelected = i;
+						console.log("Last Button Selected = "+lastButtonSelected);
 					}
 				}
 			}
@@ -83,43 +73,7 @@ function mousePressed(){
 		var fwdButtonLocation = forwardButton.getButtonLocation();
 		if (forwardButton.active){
 			if (dist(mouseX, mouseY, fwdButtonLocation.x, fwdButtonLocation.y) < 75/2) {
-				// console.log("forward button clicked");
-
-				// var answerString = "";
-
-				// // loop through all of the selected buttons
-				// for (var i = 0; i < buttons.length; i++) {
-				// 	if (buttons[i].selected){
-				// 		if (answerString.length < 1){
-				// 			// if there hasn't been anything added to the answer string, add it
-				// 			answerString.concat("?a"+[i]+"=1");
-				// 			console.log(answerString);
-				// 		} else {
-				// 			// if the answer string already has some content, include and ampersand first
-				// 			answerString.concat("&a"+[i]+"=1");
-				// 		}						
-				// 	}
-				// };
-
-				checkButtons(submitAnswers);
-
-				//answers are formatted like this for now: http://localhost:3000/next?a1=a&a2=c
-
-				// submitAnswer("answerString");
-								
-
-				// get the next quest from server
-
-
-				// jsonObject = 
-				// 	{"id":"1",
-				// 	"type":"3",
-				// 	"question":"Which of the following are considered microbes?",
-				// 	"answers":["mite","E. coli","Ebola","fruit fly","cockroach"],
-				// 	"images":["images/Ecoli.jpg", "images/Ecoli.jpg", "images/Ecoli.jpg", "images/Ecoli.jpg"]};
-				// requiredAnswers = jsonObject.type;
-				// currentQuestion = jsonObject.question;
-
+				checkAnswers(submitAnswers);
 				clearButtons();
 				hue += 36;
 				// console.log("Hue: "+hue);
@@ -129,7 +83,10 @@ function mousePressed(){
 		}
 
 		var backButtonLocation = backButton.getButtonLocation();
-		if (dist(mouseX, mouseY, backButtonLocation.x, backButtonLocation.y) < 75/2) console.log("back button clicked");
+		if (dist(mouseX, mouseY, backButtonLocation.x, backButtonLocation.y) < 75/2){
+			console.log("back button clicked");
+			submitAnswers('http://localhost:4000/back');			
+		} 
 
 	} else {
 
@@ -153,7 +110,7 @@ function mousePressed(){
 }
 
 
-var checkButtons = function(callback){
+var checkAnswers = function(callback){
 
 	var answerString = "";
 
@@ -245,14 +202,6 @@ function setupButtons(){
 
 	for (var i = 0; i < jsonObject.question.answers.length; i++) {
 
-		// var theImage;
-
-		// loadImage(images[i], function(img){
-		// 	theImage = img;
-		// 	console.log("loaded");
-			
-		// });
-
 		var button = new Button(origin, width, height, jsonObject.question.answers[i], [hue, 204, 100], images[i]);
 		buttons.push(button);		
 
@@ -283,7 +232,8 @@ function submitAnswers(_answerString) {
     	
     	console.log (xhttp.responseText);
     	jsonObject = JSON.parse(xhttp.responseText);
-    	
+
+    	currentQuestionId = parseInt(jsonObject.question.id);    	
     	
     	clearButtons();
     	setTimeout(setupButtons, 25);

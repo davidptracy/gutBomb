@@ -31,10 +31,10 @@ NavigationBar.prototype.display = function() {
 
 }
 
-NavigationBar.prototype.update = function(_questionId){
+NavigationBar.prototype.update = function(_numberOfQuestions, _questionId){
 
-	this.currentQuestion = _questionId;
-
+	this.numberOfQuestions 	= _numberOfQuestions;
+	this.currentQuestion 	= _questionId;
 }
 
 NavigationBar.prototype.drawCircles = function(){
