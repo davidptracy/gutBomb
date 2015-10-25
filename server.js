@@ -2,6 +2,8 @@ var express = require('express');
 var bodyParser = require('body-parser')
 var app = express();
 var moment = require('moment');
+var crontab = require('node-crontab');
+
 moment().format();
 
 app.use(bodyParser());
@@ -257,7 +259,6 @@ function convertArrayOfObjectsToCSV(data) {
         result += lineDelimiter
     }
     var today = moment().startOf('day').local().format('MM-DD-YYYY');;
-
     var name = today + ".csv";
     fs.writeFile(name, result, function(err) {
     if(err) {
@@ -269,3 +270,18 @@ function convertArrayOfObjectsToCSV(data) {
     return result;
 }
 
+var cronJob = '30 18 * * 0';            //every sunday at midnight
+crontab.scheduleJob(cronJob, function(){
+    var today = moment().startOf('day').local(),  
+    lastWeek = moment(today).subtract(-7,'data');
+
+  Survey.find({
+        surveyVersion: 'timestamp',
+
+      timedate: {
+        $gte: lastWeek.toDate(),
+        $lt: today.toDate()
+      }
+  }).
+  exec(process);
+});
