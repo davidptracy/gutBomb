@@ -17,6 +17,8 @@ var selectedAnswers = new Array();
 var lastButtonSelected;
 var idleTime;
 
+var countdown;
+
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 	created = true;
@@ -29,6 +31,7 @@ function setup() {
 	currentQuestionId = parseInt(jsonObject.question.id);
 	totalQuestions  = parseInt(jsonObject.length);
 	idleTime = 0;
+	countdown = true;
 }
 
 function draw() {
@@ -116,6 +119,17 @@ function mousePressed(){
 
 var checkAnswers = function(callback){
 
+
+	/// http://localhost:4000/next?q1a3=q1a3
+
+	/// currentQuestionId + 
+
+
+	/// slider identifier answer = 11 ??
+
+	/// 
+
+
 	var answerString = "";
 
 	// loop through all of the selected buttons
@@ -186,8 +200,13 @@ function displayQuestion(_question){
 
 }
 
-function setupButtons(){
 
+// =================================================================
+// ====================== ANSWER BUTTONS ===========================
+// =================================================================
+
+
+function setupButtons(){
 
 	if (jsonObject.question.answers.length > 4){
 		height = windowHeight*.15;
@@ -263,16 +282,29 @@ setTimeout(function(){
 }, 25);
 
 
-setInterval(timerIncrement, 1000);
+// =================================================================
+// ======================== IDLE TIMER =============================
+// =================================================================
+
+/*		After 30 seconds, if th
+
+*/
+
+
+
+setInterval(timerIncrement, 1000);	
 
 function timerIncrement(){
-	if (idleTime < 30){
-		idleTime ++;
-		console.log(idleTime);		
-	} 	else  {
-		//reset the page
-		idleTime = 0;
-		submitAnswers('/reset');
-		setTimeout(window.open("http://localhost:4000/", "_self"), 5);
+
+	if (countdown){
+		if (idleTime < 30){
+			idleTime ++;
+			console.log(idleTime);		
+		} 	else  {
+			//reset the page
+			idleTime = 0;
+			submitAnswers('/reset');
+			setTimeout(window.open("http://localhost:4000/", "_self"), 5);
+		}		
 	}
 }
