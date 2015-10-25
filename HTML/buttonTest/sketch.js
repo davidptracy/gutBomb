@@ -16,7 +16,6 @@ var buttons = new Array();
 var selectedAnswers = new Array();
 var lastButtonSelected;
 var idleTime;
-
 var countdown;
 
 function setup() {
@@ -51,6 +50,8 @@ function draw() {
 	checkAnswerCount();
 }
 
+
+
 function mousePressed(){
 
 	if (!exitMenu.on){
@@ -81,16 +82,15 @@ function mousePressed(){
 				checkAnswers(submitAnswers);
 				clearButtons();
 				hue += 36;
-				// console.log("Hue: "+hue);
 				if (hue >= 360) hue = 0;
-				// setupButtons();
 			}
 		}
 
 		var backButtonLocation = backButton.getButtonLocation();
 		if (dist(mouseX, mouseY, backButtonLocation.x, backButtonLocation.y) < 75/2){
 			console.log("back button clicked");
-			submitAnswers('http://localhost:4000/back');			
+			submitAnswers('http://localhost:4000/back');
+			hue -= 36;			
 		} 
 
 	} else {
@@ -119,28 +119,20 @@ function mousePressed(){
 
 var checkAnswers = function(callback){
 
-
-	/// http://localhost:4000/next?q1a3=q1a3
-
-	/// currentQuestionId + 
-
-
 	/// slider identifier answer = 11 ??
-
-	/// 
-
 
 	var answerString = "";
 
 	// loop through all of the selected buttons
 	for (var i = 0; i < buttons.length; i++) {
 		if (buttons[i].selected){
+
 			if (answerString.length == 0){
 				// if there hasn't been anything added to the answer string, add it
 				answerString = "?a"+[i]+"=1";
 			} else {
 				// if the answer string already has some content, include and ampersand first
-				answerString.concat("&a"+[i]+"=1");
+				answerString+="&a"+[i]+"=1";
 			}						
 		}
 	};
