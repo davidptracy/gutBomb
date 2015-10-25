@@ -154,6 +154,14 @@ var checkAnswers = function(callback){
 				// if the answer string already has some content, include and ampersand first
 				answerString+="&a"+[i+1]+"=1";
 			}						
+		}else{
+			if (answerString.length == 0){
+				// if there hasn't been anything added to the answer string, add it
+				answerString = "?a"+[i+1]+"=0";
+			} else {
+				// if the answer string already has some content, include and ampersand first
+				answerString+="&a"+[i+1]+"=0";
+			}			
 		}
 	};
 
