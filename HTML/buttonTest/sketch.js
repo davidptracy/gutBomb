@@ -1,7 +1,5 @@
 /* TO DO
-
 slider bar
-
 */
 
 var jsonObject = {"question":{"id":"1","type":"multiple","question":"Which of the following are considered microbes?","answers":["mite","E. coli","Ebola","fruit fly","cockroach"],"image":["images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg"]},"responses":[],"length":14};
@@ -17,6 +15,7 @@ var forwardButton;
 var buttons = new Array();
 var selectedAnswers = new Array();
 var lastButtonSelected;
+var idleTime;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -29,6 +28,7 @@ function setup() {
 	exitMenu = new ExitMenu(createVector(windowWidth/2, windowHeight*.35));
 	currentQuestionId = parseInt(jsonObject.question.id);
 	totalQuestions  = parseInt(jsonObject.length);
+	idleTime = 0;
 }
 
 function draw() {
@@ -40,17 +40,19 @@ function draw() {
 
 	navBar.update(totalQuestions, currentQuestionId);	
 	navBar.display();
-	backButton.display(hue);
+	if (currentQuestionId > 1){
+		backButton.display(hue);		
+	}
 	forwardButton.display(hue);
 	exitMenu.display();
 	checkAnswerCount();
-	// submitButton();
-
 }
 
 function mousePressed(){
 
 	if (!exitMenu.on){
+
+		idleTime = 0;
 
 		for (var i = 0; i < buttons.length; i++) {
 			if (mouseX > buttons[i].origin.x && mouseX < buttons[i].origin.x+buttons[i].width){
@@ -96,6 +98,8 @@ function mousePressed(){
 		if (mouseX > exitButtonLocations[0].x && mouseX < exitButtonLocations[0].x + exitMenu.buttonWidth){
 			if(mouseY > exitButtonLocations[0].y && mouseY < exitButtonLocations[0].y + exitMenu.buttonHeight){
 				console.log("Cancel the Survey");
+				submitAnswers('/reset');
+				setTimeout(window.open("http://localhost:4000/", "_self"), 5);
 			}
 		}
 
@@ -248,11 +252,27 @@ function submitAnswers(_answerString) {
 
 }
 
-setTimeout(function(){
 
+// Initial request to start survey
+setTimeout(function(){
 	if (created){
 		console.log("sending AJAX request for new survey");
 		submitAnswers("/new");
 	}
 	created = false;
 }, 25);
+
+
+setInterval(timerIncrement, 1000);
+
+function timerIncrement(){
+	if (idleTime < 30){
+		idleTime ++;
+		console.log(idleTime);		
+	} 	else  {
+		//reset the page
+		idleTime = 0;
+		submitAnswers('/reset');
+		setTimeout(window.open("http://localhost:4000/", "_self"), 5);
+	}
+}
