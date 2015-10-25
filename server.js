@@ -174,13 +174,14 @@ var submitSurvey = function(){
 // find all surveys in date range
 app.get('/find', function(req, res){
 var today = moment().startOf('day').local(),
+    lastWeek = moment(today).subtract(-7,'data');
     tomorrow = moment(today).add(1, 'days');
 
   Survey.find({
         surveyVersion: 'timestamp',
 
       timedate: {
-        $gte: today.toDate(),
+        $gte: lastWeek.toDate(),
         $lt: tomorrow.toDate()
       }
   }).
@@ -188,25 +189,10 @@ var today = moment().startOf('day').local(),
   res.end();
 });
 
+
 var process= function (err, results){
   if (err) return handleError(err);
-  // createCSV(results);
-  // var info = []; 
-  // for (var i = 0; i< results.length; i++){
-  //     var newLine = [];
-  //     for ( var j = 0; j< results[i].answers.length; j++){
-  //         newLine.push({
-  //           id: results[i].answers[i].id,
-  //           answers: results[i].answers[i].answers
-  //         });
-  //     }
-  //     info.push(newLine);
-  // }
-  
-  var csv = convertArrayOfObjectsToCSV(results)
-  //console.log(csv);
-  //console.log(results);
-  //console.log(info);
+  console.log(convertArrayOfObjectsToCSV(results));
 }
 
 
@@ -220,12 +206,9 @@ app.get('/clear', function ( req, res){
 
 
 
-function convertArrayOfObjectsToCSV(args) {  
-    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
-    // data = args.data;
+function convertArrayOfObjectsToCSV(data) {  
+    var result, columnDelimiter, lineDelimiter, data;
 
-    data = args
-    console.log(data[0])
     columnDelimiter  = ',';
     lineDelimiter    =  '\n';
     // set up initial csv column keys
@@ -244,7 +227,6 @@ function convertArrayOfObjectsToCSV(args) {
     result = '';
     result += keys
     result += lineDelimiter;
-    // console.log(result);
 
     // add response data
     for ( var i = 0; i< data.length; i++){  
@@ -259,53 +241,31 @@ function convertArrayOfObjectsToCSV(args) {
                       n++;
                   });
             }else{
-                                // recievedAns.push(answers[j].answers[x].slice(-1));
-                var recievedAns = [];
                for (var x = 0; x< answers[j].answers.length; x++){
-                  var key = 'q';
-                  var qNum = j+1;
-                  key+= qNum;
-                  result+= key + answers[j].answers[x]+columnDelimiter;
-
-                  recievedAns.push(answers[j].answers[x].slice(-1));
+                  if (answers[j].answers[x] == 1){
+                    var key = 'q';
+                    var qNum = j+1;
+                    var aNum = x+1;
+                    key += qNum.toString() + 'a' + aNum.toString();
+                    result+= key + columnDelimiter;
+                  }else{
+                    result+= columnDelimiter;
+                  }
                 }
-                console.log(recievedAns);
             }
         }
         result += lineDelimiter
     }
-    console.log(result);
-    // data.forEach(function(item) {
-    //     ctr = 0;
-    //     keys.forEach(function(key) {
-    //         if (ctr > 0) result += columnDelimiter;
+    var today = moment().startOf('day').local().format('MM-DD-YYYY');;
 
-    //         result += item[key];
-    //         ctr++;
-    //     });
-    //     result += lineDelimiter;
-    // });
+    var name = today + ".csv";
+    fs.writeFile(name, result, function(err) {
+    if(err) {
+        return console.log(err);
+    }
 
+    console.log("The file was saved!");
+    }); 
     return result;
 }
-
-
-//check question has been logged already
-
-// getJson(/:questions, function(data)){
-//   data.response, data.survey
-// }
-
-
-
-// should answers be remembered if you navigate back to a question
-
-// this should probably use pos
-// time out for survey to submit itself as imcomplete
-// timeout, back to beginning, "NEW SURVEY" button, "submit" button, skipped questions
-// real way to do it should be
-// app.post('/answer')
-
-
-
 
