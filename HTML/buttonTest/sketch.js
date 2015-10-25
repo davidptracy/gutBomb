@@ -12,6 +12,7 @@ var exitMenu;
 var navBar;
 var backButton;
 var forwardButton;
+var thankYou;
 var buttons = new Array();
 var selectedAnswers = new Array();
 var lastButtonSelected;
@@ -27,6 +28,7 @@ function setup() {
 	backButton = new NavigationButton(createVector(50, windowHeight/2), true, -1);
 	forwardButton = new NavigationButton(createVector(windowWidth-50, windowHeight/2 ), false, 1);
 	exitMenu = new ExitMenu(createVector(windowWidth/2, windowHeight*.35));
+	thankYou = new ThanksMessage(createVector(windowWidth/2, windowHeight*.35));
 	currentQuestionId = parseInt(jsonObject.question.id);
 	totalQuestions  = parseInt(jsonObject.length);
 	idleTime = 0;
@@ -45,8 +47,17 @@ function draw() {
 	if (currentQuestionId > 1){
 		backButton.display(hue);		
 	}
-	forwardButton.display(hue);
+
+	if (currentQuestionId == totalQuestions){
+		forwardButton.submitActive = true;
+		forwardButton.display();
+	} else {
+		forwardButton.submitActive = false;
+		forwardButton.display(hue);
+	}
+	
 	exitMenu.display();
+	thankYou.display();
 	checkAnswerCount();
 }
 
@@ -79,6 +90,14 @@ function mousePressed(){
 		var fwdButtonLocation = forwardButton.getButtonLocation();
 		if (forwardButton.active){
 			if (dist(mouseX, mouseY, fwdButtonLocation.x, fwdButtonLocation.y) < 75/2) {
+				
+				if (currentQuestionId == totalQuestions){
+					//display thank you message for 5 seconds
+					thankYou.on = true;
+					setTimeout(submitAnswers('/reset'), 10000);
+					setTimeout(window.open("http://localhost:4000/", "_self"), 10100);
+				}
+
 				checkAnswers(submitAnswers);
 				clearButtons();
 				hue += 36;
@@ -90,6 +109,7 @@ function mousePressed(){
 		if (dist(mouseX, mouseY, backButtonLocation.x, backButtonLocation.y) < 75/2){
 			console.log("back button clicked");
 			submitAnswers('http://localhost:4000/back');
+			clearButtons();
 			hue -= 36;			
 		} 
 
@@ -129,10 +149,10 @@ var checkAnswers = function(callback){
 
 			if (answerString.length == 0){
 				// if there hasn't been anything added to the answer string, add it
-				answerString = "?a"+[i]+"=1";
+				answerString = "?a"+[i+1]+"=1";
 			} else {
 				// if the answer string already has some content, include and ampersand first
-				answerString+="&a"+[i]+"=1";
+				answerString+="&a"+[i+1]+"=1";
 			}						
 		}
 	};
@@ -278,11 +298,9 @@ setTimeout(function(){
 // ======================== IDLE TIMER =============================
 // =================================================================
 
-/*		After 30 seconds, if th
+/*		After 30 seconds, if there hasn't been any activity
 
 */
-
-
 
 setInterval(timerIncrement, 1000);	
 
