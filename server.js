@@ -152,7 +152,7 @@ app.get('/reset', function(req, res){
   curQuestion = 0;
   submitSurvey();
   for (var i = 0; i<responses.length; i++){
-    responses.responses = [];
+    responses[i].responses = [];
   }
   res.end(JSON.stringify(newSurvey));
 
