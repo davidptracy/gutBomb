@@ -151,6 +151,9 @@ app.get('/back', function(req, res){
 app.get('/reset', function(req, res){
   curQuestion = 0;
   submitSurvey();
+  for (var i = 0; i<responses.length; i++){
+    responses.responses = [];
+  }
   res.end(JSON.stringify(newSurvey));
 
 })
