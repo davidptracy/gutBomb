@@ -59,6 +59,14 @@ function draw() {
 	exitMenu.display();
 	thankYou.display();
 	checkAnswerCount();
+
+	if (thankYou.on){
+		if (idleTime > 5){
+			idleTime = 0;
+			submitAnswers('/reset');
+			setTimeout(window.open("http://localhost:4000/", "_self"), 5);
+		}
+	}
 }
 
 
@@ -94,8 +102,9 @@ function mousePressed(){
 				if (currentQuestionId == totalQuestions){
 					//display thank you message for 5 seconds
 					thankYou.on = true;
-					setTimeout(submitAnswers('/reset'), 10000);
-					setTimeout(window.open("http://localhost:4000/", "_self"), 10100);
+					checkAnswers(submitAnswers);
+					// setTimeout(submitAnswers('/reset'), 10000);
+					// setTimeout(window.open("http://localhost:4000/", "_self"), 10100);
 				}
 
 				checkAnswers(submitAnswers);
@@ -107,10 +116,12 @@ function mousePressed(){
 
 		var backButtonLocation = backButton.getButtonLocation();
 		if (dist(mouseX, mouseY, backButtonLocation.x, backButtonLocation.y) < 75/2){
-			console.log("back button clicked");
-			submitAnswers('http://localhost:4000/back');
-			clearButtons();
-			hue -= 36;			
+			if (currentQuestionId > 1){
+				console.log("back button clicked");
+				submitAnswers('http://localhost:4000/back');
+				clearButtons();
+				hue -= 36;						
+			}
 		} 
 
 	} else {
@@ -255,7 +266,21 @@ function setupButtons(){
 			origin.y += height+margin;
 		} 
 	};
+
+	checkSelected();
 }
+
+function checkSelected(){
+
+	for (var i = 0; i < jsonObject.responses.length; i++) {
+		var response = jsonObject.responses[i];
+		if (response == '1'){
+			buttons[i].selected = true;
+		}
+	};
+
+}
+
 
 function clearButtons(){
 	for (var i = 0; i < buttons.length; i++) {
@@ -326,3 +351,15 @@ function timerIncrement(){
 		}		
 	}
 }
+
+
+// =================================================================
+// ======================== SUBMIT TIMER ===========================
+// =================================================================
+
+if (thankYou.on){
+	submitAnswers('/reset');
+	setTimeout(window.open("http://localhost:4000/", "_self"), 5000);
+}
+
+
