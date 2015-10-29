@@ -252,7 +252,7 @@ function convertArrayOfObjectsToCSV(data) {
                     var qNum = j+1;
                     var aNum = x+1;
                     key += qNum.toString() + 'a' + aNum.toString();
-                    result+= key + columnDelimiter;
+                    result+= key;
                   }else if(answers[j].answers[x] == 0) {
                     result+= columnDelimiter;
                   }else{
@@ -275,7 +275,7 @@ function convertArrayOfObjectsToCSV(data) {
     return result;
 }
 
-var cronJob = '0 0 * * 0';            //every sunday at midnight
+var cronJob = '35 22 * * *';            //minutes hours months weeks days
 crontab.scheduleJob(cronJob, function(){
     var today = moment().startOf('day').local(),  
     lastWeek = moment(today).subtract(-7,'data');

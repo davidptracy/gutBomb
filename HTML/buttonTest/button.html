@@ -24,8 +24,8 @@
   <title>Button Test</title>
 </head>
 <script>
-    var countrySelected;
-    console.log(countrySelected);
+    
+    // console.log(countrySelected);
     function touch_detect() {
         return 'ontouchstart' in window || 'onmsgesturechange' in window || navigator.msMaxTouchPoints > 0;
     }
@@ -45,13 +45,13 @@
             if (!touch_detect()) {
               countrySelected = region;
               buttons[0].selected = true;
-              console.log(region);
+              // console.log(region);
             }
           },
           onRegionOver: function (element, code, region) {
             if (touch_detect()) {
-                countrySelected = region;
-                console.log(region);
+                // countrySelected = region;
+                // console.log(region);
             }
           }
         });

@@ -18,6 +18,8 @@ var selectedAnswers = new Array();
 var lastButtonSelected;
 var idleTime;
 var countdown;
+var map;
+var countrySelected;
 
 var lastAnswerArray = new Array();
 
@@ -35,6 +37,11 @@ function setup() {
 	totalQuestions  = parseInt(jsonObject.length);
 	idleTime = 0;
 	countdown = true;
+
+	map = document.getElementById("vmap");
+	map.style.visibility = "hidden";
+
+
 }
 
 function draw() {
@@ -50,7 +57,8 @@ function draw() {
 		backButton.display(hue);		
 	}
 
-	if (currentQuestionId == totalQuestions){
+	if (currentQuestionId == totalQuestions){		
+		map.style.visibility = "visible";
 		forwardButton.submitActive = true;
 		forwardButton.display();
 	} else {
@@ -61,6 +69,7 @@ function draw() {
 	exitMenu.display();
 	thankYou.display();
 	checkAnswerCount();
+
 
 	if (thankYou.on){
 		if (idleTime > 5){
@@ -177,9 +186,10 @@ var checkAnswers = function(callback){
 
 	var answerString = "";
 
-	if (requiredAnswers == "map"){
-		answerString = countrySelected;	
-		callback("http://localhost:4000/next"+answerString);	
+	if (currentQuestionId == totalQuestions){
+		answerString = countrySelected;
+		console.log(countrySelected);
+		callback("http://localhost:4000/next?a1="+escape(answerString));	
 	} else {
 		// loop through all of the selected buttons
 		for (var i = 0; i < buttons.length; i++) {
