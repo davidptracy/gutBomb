@@ -245,7 +245,7 @@ function convertArrayOfObjectsToCSV(data) {
                       result +=  '' + columnDelimiter;
                       n++;
                   });
-            }else{
+            }else {
                for (var x = 0; x< answers[j].answers.length; x++){
                   if (answers[j].answers[x] == 1){
                     var key = 'q';
@@ -253,8 +253,10 @@ function convertArrayOfObjectsToCSV(data) {
                     var aNum = x+1;
                     key += qNum.toString() + 'a' + aNum.toString();
                     result+= key + columnDelimiter;
-                  }else{
+                  }else if(answers[j].answers[x] == 0) {
                     result+= columnDelimiter;
+                  }else{
+                    result+=answers[j].answers[x] + columnDelimiter;
                   }
                 }
             }
@@ -273,7 +275,7 @@ function convertArrayOfObjectsToCSV(data) {
     return result;
 }
 
-var cronJob = '30 18 * * 0';            //every sunday at midnight
+var cronJob = '0 0 * * 0';            //every sunday at midnight
 crontab.scheduleJob(cronJob, function(){
     var today = moment().startOf('day').local(),  
     lastWeek = moment(today).subtract(-7,'data');
