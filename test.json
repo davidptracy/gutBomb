@@ -173,6 +173,39 @@
             "I agree and am fully aware of the importance of this statement."
            ],
          "image": [] 
+      },{
+         "id": "15",
+         "type": "1",
+         "question": "Please select your age range:",
+         "answers": [
+            "Under 18 years old",
+            "18-30 years old",
+            "30-40 years old",
+            "40-50 years old",
+            "50-60 years old",
+            "Over 60 years old"
+           ],
+         "image": [] 
+      }
+      ,{
+         "id": "16",
+         "type": "1",
+         "question": "What is your gender?",
+         "answers": [
+            "Male",
+            "Female",
+            "I'd rather not say"
+           ],
+         "image": [] 
+      }
+      ,{
+         "id": "17",
+         "type": "1",
+         "question": "Where are you from?",
+         "answers": [
+            "MapView"
+           ],
+         "image": [] 
       }
    ] 
 }

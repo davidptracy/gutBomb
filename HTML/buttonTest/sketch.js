@@ -2,7 +2,7 @@
 slider bar
 */
 
-var jsonObject = {"question":{"id":"1","type":"multiple","question":"Which of the following are considered microbes?","answers":["mite","E. coli","Ebola","fruit fly","cockroach"],"image":["images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg"]},"responses":[],"length":14};
+var jsonObject = {"question":{"id":"1","type":"multiple","question":"Which of the following are considered microbes?","answers":["mite","E. coli","Ebola","fruit fly","cockroach"],"image":["images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg"]},"responses":[],"length":17};
 var created;
 var origin, width, height, margin, selected, requiredAnswers, hue;
 var currentQuestion;
@@ -18,6 +18,8 @@ var selectedAnswers = new Array();
 var lastButtonSelected;
 var idleTime;
 var countdown;
+
+var lastAnswerArray = new Array();
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
@@ -69,8 +71,6 @@ function draw() {
 	}
 }
 
-
-
 function mousePressed(){
 
 	if (!exitMenu.on){
@@ -82,11 +82,19 @@ function mousePressed(){
 				if (mouseY > buttons[i].origin.y && mouseY < buttons[i].origin.y+buttons[i].height){
 					buttons[i].selected = !buttons[i].selected;
 					if (buttons[i].selected){
-						if (forwardButton.active && requiredAnswers!== 'multiple'){
-							buttons[lastButtonSelected].selected = false;
+						if (forwardButton.active && requiredAnswers !== 'multiple'){
+							if (lastAnswerArray[currentQuestionId-1] && clickCount == 0){
+								clickCount ++;
+								console.log(clickCount);
+								console.log('we have stored content!');
+								console.log(lastAnswerArray[currentQuestionId-1]);
+								buttons[lastAnswerArray[currentQuestionId-1]].selected = false;
+							} else {
+								buttons[lastButtonSelected].selected = false;
+							}							
 						}
 						lastButtonSelected = i;
-						console.log("Last Button Selected = "+lastButtonSelected);
+						console.log("Last Button Selected = " + lastButtonSelected);
 					}
 				}
 			}
@@ -107,9 +115,22 @@ function mousePressed(){
 					// setTimeout(window.open("http://localhost:4000/", "_self"), 10100);
 				}
 
+				if (lastAnswerArray[currentQuestionId-1]){
+					lastAnswerArray[currentQuestionId-1] = lastButtonSelected;
+				} else {
+					lastAnswerArray.push(lastButtonSelected);
+				}
+				
 				checkAnswers(submitAnswers);
 				clearButtons();
 				hue += 36;
+
+				console.log("Hue: "+hue);
+
+				if (hue > 200 && hue < 260){
+					hue = 288;
+				}
+
 				if (hue >= 360) hue = 0;
 			}
 		}
@@ -123,6 +144,8 @@ function mousePressed(){
 				hue -= 36;						
 			}
 		} 
+
+
 
 	} else {
 
@@ -154,30 +177,35 @@ var checkAnswers = function(callback){
 
 	var answerString = "";
 
-	// loop through all of the selected buttons
-	for (var i = 0; i < buttons.length; i++) {
-		if (buttons[i].selected){
+	if (requiredAnswers == "map"){
+		answerString = countrySelected;	
+		callback("http://localhost:4000/next"+answerString);	
+	} else {
+		// loop through all of the selected buttons
+		for (var i = 0; i < buttons.length; i++) {
+			if (buttons[i].selected){
 
-			if (answerString.length == 0){
-				// if there hasn't been anything added to the answer string, add it
-				answerString = "?a"+[i+1]+"=1";
-			} else {
-				// if the answer string already has some content, include and ampersand first
-				answerString+="&a"+[i+1]+"=1";
-			}						
-		}else{
-			if (answerString.length == 0){
-				// if there hasn't been anything added to the answer string, add it
-				answerString = "?a"+[i+1]+"=0";
-			} else {
-				// if the answer string already has some content, include and ampersand first
-				answerString+="&a"+[i+1]+"=0";
-			}			
-		}
-	};
+				if (answerString.length == 0){
+					// if there hasn't been anything added to the answer string, add it
+					answerString = "?a"+[i+1]+"=1";
+				} else {
+					// if the answer string already has some content, include and ampersand first
+					answerString+="&a"+[i+1]+"=1";
+				}						
+			}else{
+				if (answerString.length == 0){
+					// if there hasn't been anything added to the answer string, add it
+					answerString = "?a"+[i+1]+"=0";
+				} else {
+					// if the answer string already has some content, include and ampersand first
+					answerString+="&a"+[i+1]+"=0";
+				}			
+			}
+		};
 
-	// console.log("http://localhost:4000/next"+answerString);
-	callback("http://localhost:4000/next"+answerString);
+		// console.log("http://localhost:4000/next"+answerString);
+		callback("http://localhost:4000/next"+answerString);
+	}
 
 }
 
@@ -301,7 +329,9 @@ function submitAnswers(_answerString) {
     	console.log (xhttp.responseText);
     	jsonObject = JSON.parse(xhttp.responseText);
 
-    	currentQuestionId = parseInt(jsonObject.question.id);    	
+    	currentQuestionId = parseInt(jsonObject.question.id); 
+
+    	clickCount = 0;   	
     	
     	clearButtons();
     	setTimeout(setupButtons, 25);
