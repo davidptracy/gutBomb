@@ -20,7 +20,7 @@ var idleTime;
 var countdown;
 var map;
 var countrySelected;
-
+var gol;
 var lastAnswerArray = new Array();
 
 function setup() {
@@ -37,6 +37,7 @@ function setup() {
 	totalQuestions  = parseInt(jsonObject.length);
 	idleTime = 0;
 	countdown = true;
+  	gol = new GOL();
 
 	map = document.getElementById("vmap");
 	map.style.visibility = "hidden";
@@ -46,6 +47,13 @@ function setup() {
 
 function draw() {
 	background(255);
+	gol.generate();
+
+	push();
+		// translate(windowWidth/8, windowWidth/8);
+    	gol.display();
+    pop();
+
 	displayQuestion();
 	for (var i = 0; i < buttons.length; i++) {
 		buttons[i].display();
@@ -215,6 +223,8 @@ var checkAnswers = function(callback){
 
 		// console.log("http://localhost:4000/next"+answerString);
 		callback("http://localhost:4000/next"+answerString);
+	    gol.init();
+
 	}
 
 }
