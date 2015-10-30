@@ -39,9 +39,7 @@ WelcomeButton.prototype.display = function(){
 			vertex(this.width-this.margin, this.height-this.margin);
 			vertex(this.width, this.height);
 			vertex(this.width, this.margin);
-			endShape(CLOSE);
-
-			
+			endShape(CLOSE);		
 
 			push();
 				translate((this.width/2)-(this.margin/2), (this.height/2)-(this.margin/2));

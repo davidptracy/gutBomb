@@ -372,7 +372,6 @@ setTimeout(function(){
 // =================================================================
 
 /*		After 30 seconds, if there hasn't been any activity
-
 */
 
 setInterval(timerIncrement, 1000);	

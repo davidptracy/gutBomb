@@ -263,7 +263,7 @@ function convertArrayOfObjectsToCSV(data) {
         }
         result += lineDelimiter
     }
-    var today = moment().startOf('day').local().format('MM-DD-YYYY');;
+    var today = moment().startOf('day').local().format('MM-DD-YYYY');
     var name = today + ".csv";
     fs.writeFile(name, result, function(err) {
     if(err) {
