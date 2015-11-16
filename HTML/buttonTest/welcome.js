@@ -6,35 +6,40 @@ connect all the pieces
 */
 
 var origin, width, height, margin, selected, requiredAnswers, hue;
-
 var currentQuestion;
-
 var exitMenu;
-
 var navBar;
-
 var welcomeButton;
-
 var backButton;
 var forwardButton;
+var eColis;
+
+function preload(){
+	museoSans100 = loadFont('assets/MuseoSans-100.otf');
+	museoSans500 = loadFont('assets/MuseoSans-500.otf');
+	museoSans700 = loadFont('assets/MuseoSans-700.otf');
+	museoSans900 = loadFont('assets/MuseoSans-900.otf');
+}
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-
 	hue = 201;
-
 	width 	= windowWidth/6;
 	height 	= windowHeight/4;
 	origin 	= createVector(windowWidth/2-width, windowHeight/2-height);
-
 	welcomeButton = new WelcomeButton(origin, width*2, height, "Welcome", [hue, 100, 100]);
-
 	navBar = new NavigationBar();
-
 	backButton = new NavigationButton(createVector(50, windowHeight/2), true, -1);
 	forwardButton = new NavigationButton(createVector(windowWidth-50, windowHeight/2 ), false, 1);
-
 	exitMenu = new ExitMenu(createVector(windowWidth/2, windowHeight*.35));
+
+	eColis = new Array();
+
+	for (var i = 0; i < 25; i++) {
+		eColi = new Ecoli( createVector( random(windowWidth), random(windowHeight) ), createVector(random(-2, -.25), random(-2, -.25)) );
+		eColi.hue = 201;
+		eColis.push(eColi);
+	};
 
 }
 
@@ -42,14 +47,16 @@ function draw() {
 
 	background(255);
 
-	welcomeButton.display();
+	for (var i = 0; i < eColis.length; i++) {
+		eColis[i].update(201);
+		eColis[i].display();
+	};
 
-	// displayQuestion();
-	// navBar.display();
-	// backButton.display(hue);
-	// forwardButton.display(hue);
-	// exitMenu.display();
-	// checkAnswerCount();
+	colorMode(RGB);
+	fill(255,255,255,75);
+	rect(0,0, windowWidth, windowHeight);
+
+	welcomeButton.display();
 
 }
 
@@ -62,7 +69,15 @@ function mousePressed(){
 
 			// setTimeout(submitAnswers("http://localhost:4000/survey"), 50);
 			setTimeout(window.open("http://localhost:4000/survey", "_self"), 50);
-		}
+		}else {
+			eColi = new Ecoli( createVector( mouseX, mouseY ), createVector(random(-2, -.25), random(-2, -.25)) );
+			eColis.push(eColi);
+			eColis.shift();
+		}	
+	} else {
+		eColi = new Ecoli( createVector( mouseX, mouseY ), createVector(random(-2, -.25), random(-2, -.25)) );
+		eColis.push(eColi);
+		eColis.shift();
 	}	
 }
 
@@ -112,6 +127,7 @@ function displayQuestion(_question){
 		translate(windowWidth/2, 65);
 		translate(this.buttonWidth/2, this.buttonHeight/2);
 		fill(0);
+		textFont(museoSans700);
 		textSize(36);
 		textAlign(CENTER, CENTER);
 		rectMode(CENTER);

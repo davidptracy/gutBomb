@@ -22,8 +22,19 @@ var map;
 var countrySelected;
 var gol;
 var lastAnswerArray = new Array();
+var eColis;
+
+function preload(){
+	museoSans100 = loadFont('assets/MuseoSans-100.otf');
+	museoSans500 = loadFont('assets/MuseoSans-500.otf');
+	museoSans700 = loadFont('assets/MuseoSans-700.otf');
+	museoSans900 = loadFont('assets/MuseoSans-900.otf');
+	map = document.getElementById("vmap");
+	map.style.visibility = "hidden";
+}
 
 function setup() {
+
 	createCanvas(windowWidth, windowHeight);
 	created = true;
 	hue = 0;
@@ -39,20 +50,31 @@ function setup() {
 	countdown = true;
   	gol = new GOL();
 
-	map = document.getElementById("vmap");
-	map.style.visibility = "hidden";
+	eColis = new Array();
 
-
+	for (var i = 0; i < 25; i++) {
+		eColi = new Ecoli( createVector( random(windowWidth), random(windowHeight) ), createVector(random(-2, -.25), random(-2, -.25)) );
+		eColis.push(eColi);
+	};
 }
 
 function draw() {
 	background(255);
-	gol.generate();
+	// gol.generate();
 
 	push();
 		// translate(windowWidth/8, windowWidth/8);
-    	gol.display();
+    	// gol.display();
     pop();
+
+    for (var i = 0; i < eColis.length; i++) {
+		eColis[i].update(hue);
+		eColis[i].display();
+	};
+
+	colorMode(RGB);
+	fill(255,255,255,200);
+	rect(0,0, windowWidth, windowHeight);
 
 	displayQuestion();
 	for (var i = 0; i < buttons.length; i++) {
@@ -81,6 +103,8 @@ function draw() {
 
 	if (thankYou.on){
 		if (idleTime > 5){
+			map = document.getElementById("vmap");
+			map.style.visibility = "hidden";
 			idleTime = 0;
 			submitAnswers('/reset');
 			setTimeout(window.open("http://localhost:4000/", "_self"), 5);
@@ -149,6 +173,11 @@ function mousePressed(){
 				}
 
 				if (hue >= 360) hue = 0;
+
+				for (bacteria of eColis){
+					bacteria.hue = hue;
+				}
+
 			}
 		}
 
@@ -158,7 +187,10 @@ function mousePressed(){
 				console.log("back button clicked");
 				submitAnswers('http://localhost:4000/back');
 				clearButtons();
-				hue -= 36;						
+				hue -= 36;
+				for (bacteria of eColis){
+					bacteria.hue = hue;
+				}						
 			}
 		} 
 
@@ -223,12 +255,11 @@ var checkAnswers = function(callback){
 
 		// console.log("http://localhost:4000/next"+answerString);
 		callback("http://localhost:4000/next"+answerString);
-	    gol.init();
+	    // gol.init();
 
 	}
 
 }
-
 
 function checkAnswerCount(){
 
@@ -256,6 +287,7 @@ function displayQuestion(_question){
 		translate(windowWidth/2, 65);
 		translate(this.buttonWidth/2, this.buttonHeight/2);
 		fill(0);
+		textFont(museoSans700);
 		textSize(32);
 		textAlign(CENTER, CENTER);
 		rectMode(CENTER);
@@ -264,13 +296,14 @@ function displayQuestion(_question){
 		push();
 			translate(0,75);
 			fill(0);
+			textFont(museoSans100);
 			textSize(18);
 			textAlign(CENTER, CENTER);
 			rectMode(CENTER);
 			if(requiredAnswers > 1){
-				text("[ Select "+requiredAnswers+ " Answers ]",0,0, windowWidth*.6, 100);
+				text("( Select "+requiredAnswers+ " Answers )",0,0, windowWidth*.6, 100);
 			} else {
-				text("[ Select "+requiredAnswers+ " Answer ]",0,0, windowWidth*.6, 100);
+				text("( Select "+requiredAnswers+ " Answer )",0,0, windowWidth*.6, 100);
 			}
 			
 		pop();
@@ -329,7 +362,6 @@ function checkSelected(){
 
 }
 
-
 function clearButtons(){
 	for (var i = 0; i < buttons.length; i++) {
 		buttons.splice(buttons[i]);
@@ -353,8 +385,8 @@ function submitAnswers(_answerString) {
 
     	clickCount = 0;   	
     	
-    	clearButtons();
-    	setTimeout(setupButtons, 25);
+    	// clearButtons();
+    	setTimeout(setupButtons, 50);
     	// setupButtons();
     }
   }
@@ -366,15 +398,15 @@ function submitAnswers(_answerString) {
 
 }
 
-
 // Initial request to start survey
 setTimeout(function(){
 	if (created){
 		console.log("sending AJAX request for new survey");
+		clearButtons();
 		submitAnswers("/new");
 	}
 	created = false;
-}, 25);
+}, 250);
 
 
 // =================================================================

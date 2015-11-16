@@ -20,6 +20,7 @@ function Button( _origin, _width, _height, _text, _mainColor, _image){
 		this.hasImage		= false;
 	}
 
+	// textFont(museoSans100);
 	this.tWidth 				= textWidth(this.text);
 	this.boundingWidth 			= this.width-this.margin*2;
 
@@ -64,6 +65,7 @@ Button.prototype.display = function(){
 			push();
 				translate(this.margin, this.margin/2);
 				fill(0);
+				textFont(museoSans100);
 				textSize(22*this.textScale);
 				textAlign(LEFT, CENTER);
 				// rect(0,0, this.width-this.margin*2, this.height-this.margin*2);
@@ -76,6 +78,7 @@ Button.prototype.display = function(){
 			push();
 				translate(this.margin*3+10, this.margin);
 				fill(0);
+				textFont(museoSans100);
 				textSize(22*this.textScale);
 				textAlign(LEFT, TOP);
 				text(this.text,0,0);
@@ -97,6 +100,7 @@ Button.prototype.display = function(){
 				push();
 					translate(this.margin, this.margin/2);
 					fill(0);
+					textFont(museoSans500);
 					textSize(22*this.textScale);
 					textAlign(LEFT, CENTER);
 					// rect(0,0, this.width-this.margin*2, this.height-this.margin*2);
@@ -109,6 +113,7 @@ Button.prototype.display = function(){
 				push();
 					translate(this.margin*3+10, this.margin);
 					fill(0);
+					textFont(museoSans500);
 					textSize(22*this.textScale);
 					textAlign(LEFT, TOP);
 					text(this.text,0,0);
