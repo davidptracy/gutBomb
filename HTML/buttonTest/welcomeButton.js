@@ -8,7 +8,7 @@ function WelcomeButton( _origin, _width, _height, _text, _mainColor){
 	this.origin 			= createVector(_origin.x, _origin.y);
 	this.width 				= _width;
 	this.height 			= _height;
-	this.margin 			= _height*.25;
+	this.margin 			= _height*.125;
 	this.text 				= _text;
 	this.mainColor 			= _mainColor;
 	this.selected 			= false;
@@ -45,7 +45,7 @@ WelcomeButton.prototype.display = function(){
 				translate((this.width/2)-(this.margin/2), (this.height/2)-(this.margin/2));
 				fill(0);
 				textFont(museoSans700);
-				textSize(32);
+				textSize(48);
 				textAlign(CENTER, CENTER);
 				text(this.text,0,0);
 			pop();
@@ -65,7 +65,7 @@ WelcomeButton.prototype.display = function(){
 			push();
 			translate((this.width/2)-(this.margin/2), (this.height/2)-(this.margin/2));
 			fill(0);
-			textSize(32);
+			textSize(48);
 			textAlign(CENTER, CENTER);
 			text(this.text,0,0);
 			pop();

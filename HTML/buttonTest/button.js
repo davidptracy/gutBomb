@@ -5,10 +5,12 @@ Requires p5.js > p5js.org
 
 //this is the constructor
 function Button( _origin, _width, _height, _text, _mainColor, _image){
+	// textSize(16);
+
 	this.origin 			= createVector(_origin.x, _origin.y);
 	this.width 				= _width;
 	this.height 			= _height;
-	this.margin 			= _height*.25;
+	this.margin 			= _height*.125;
 	this.text 				= _text;
 	this.mainColor 			= _mainColor;
 	this.selected 			= false;
@@ -21,13 +23,14 @@ function Button( _origin, _width, _height, _text, _mainColor, _image){
 	}
 
 	// textFont(museoSans100);
+
 	this.tWidth 				= textWidth(this.text);
 	this.boundingWidth 			= this.width-this.margin*2;
 
 	this.textScale				= 1.0;
 
 	if (this.tWidth > this.boundingWidth ){
-		this.textScale = this.boundingWidth/this.tWidth;
+		this.textScale = this.boundingWidth/(this.tWidth);
 	}
 
 
@@ -66,7 +69,7 @@ Button.prototype.display = function(){
 				translate(this.margin, this.margin/2);
 				fill(0);
 				textFont(museoSans100);
-				textSize(22*this.textScale);
+				textSize(28*this.textScale);
 				textAlign(LEFT, CENTER);
 				// rect(0,0, this.width-this.margin*2, this.height-this.margin*2);
 				text(this.text,0,0, this.width-this.margin*2, this.height-this.margin*2);
@@ -76,10 +79,10 @@ Button.prototype.display = function(){
 				image(this.image,0,0, this.height-this.margin, this.height-this.margin);
 			pop();
 			push();
-				translate(this.margin*3+10, this.margin);
+				translate(this.margin*8, this.margin);
 				fill(0);
 				textFont(museoSans100);
-				textSize(22*this.textScale);
+				textSize(28*this.textScale);
 				textAlign(LEFT, TOP);
 				text(this.text,0,0);
 			pop();
@@ -101,7 +104,7 @@ Button.prototype.display = function(){
 					translate(this.margin, this.margin/2);
 					fill(0);
 					textFont(museoSans500);
-					textSize(22*this.textScale);
+					textSize(28*this.textScale);
 					textAlign(LEFT, CENTER);
 					// rect(0,0, this.width-this.margin*2, this.height-this.margin*2);
 					text(this.text,0,0, this.width-this.margin*2, this.height-this.margin*2);
@@ -111,10 +114,10 @@ Button.prototype.display = function(){
 					image(this.image,0,0, this.height-this.margin, this.height-this.margin);
 				pop();
 				push();
-					translate(this.margin*3+10, this.margin);
+					translate(this.margin*8, this.margin);
 					fill(0);
 					textFont(museoSans500);
-					textSize(22*this.textScale);
+					textSize(28*this.textScale);
 					textAlign(LEFT, TOP);
 					text(this.text,0,0);
 				pop();

@@ -14,6 +14,8 @@ var backButton;
 var forwardButton;
 var eColis;
 
+var welcomeCopy = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
 function preload(){
 	museoSans100 = loadFont('assets/MuseoSans-100.otf');
 	museoSans500 = loadFont('assets/MuseoSans-500.otf');
@@ -57,6 +59,15 @@ function draw() {
 	rect(0,0, windowWidth, windowHeight);
 
 	welcomeButton.display();
+
+	rectMode(CENTER);
+	fill(255, 255, 255, 200);
+	noStroke();
+	rect(windowWidth/2, 3*windowHeight/4, 700, 250);
+	fill(0);
+	textSize(20);
+	textFont(museoSans100);
+	text(welcomeCopy, windowWidth/2, 3*windowHeight/4+25, 600, 250);
 
 }
 
