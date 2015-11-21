@@ -79,7 +79,7 @@ function mousePressed(){
 			welcomeButton.selected = true;
 
 			// setTimeout(submitAnswers("http://localhost:4000/survey"), 50);
-			setTimeout(window.open("http://localhost:4000/survey", "_self"), 50);
+			setTimeout(window.open("/survey", "_self"), 50);
 		}else {
 			eColi = new Ecoli( createVector( mouseX, mouseY ), createVector(random(-2, -.25), random(-2, -.25)) );
 			eColis.push(eColi);
