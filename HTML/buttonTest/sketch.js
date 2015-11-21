@@ -145,7 +145,7 @@ function draw() {
 		if (idleTime > 5){
 			idleTime = 0;
 			submitAnswers('/reset');
-			setTimeout(window.open("http://localhost:4000/", "_self"), 5);
+			setTimeout(window.open("/", "_self"), 5);
 		}
 	}
 }
@@ -233,7 +233,7 @@ function mousePressed(){
 		if (dist(mouseX, mouseY, backButtonLocation.x, backButtonLocation.y) < 75/2){
 			if (currentQuestionId > 1){
 				console.log("back button clicked");
-				submitAnswers('http://localhost:4000/back');
+				submitAnswers('/back');
 				clearButtons();
 				colorCounter --;
 
@@ -259,7 +259,7 @@ function mousePressed(){
 			if(mouseY > exitButtonLocations[0].y && mouseY < exitButtonLocations[0].y + exitMenu.buttonHeight){
 				console.log("Cancel the Survey");
 				submitAnswers('/reset');
-				setTimeout(window.open("http://localhost:4000/", "_self"), 5);
+				setTimeout(window.open("/", "_self"), 5);
 			}
 		}
 
@@ -283,7 +283,7 @@ var checkAnswers = function(callback){
 	if (currentQuestionId == totalQuestions){
 		answerString = countrySelected;
 		console.log(countrySelected);
-		callback("http://localhost:4000/next?a1="+escape(answerString));	
+		callback("/next?a1="+escape(answerString));	
 	} else {
 		// loop through all of the selected buttons
 		for (var i = 0; i < buttons.length; i++) {
@@ -308,7 +308,7 @@ var checkAnswers = function(callback){
 		};
 
 		// console.log("http://localhost:4000/next"+answerString);
-		callback("http://localhost:4000/next"+answerString);
+		callback("/next"+answerString);
 	    // gol.init();
 
 	}
@@ -482,7 +482,7 @@ function timerIncrement(){
 			//reset the page
 			idleTime = 0;
 			submitAnswers('/reset');
-			setTimeout(window.open("http://localhost:4000/", "_self"), 5);
+			setTimeout(window.open("/", "_self"), 5);
 		}		
 	}
 }
@@ -494,7 +494,7 @@ function timerIncrement(){
 
 if (thankYou.on){
 	submitAnswers('/reset');
-	setTimeout(window.open("http://localhost:4000/", "_self"), 5000);
+	setTimeout(window.open("/", "_self"), 5000);
 }
 
 
