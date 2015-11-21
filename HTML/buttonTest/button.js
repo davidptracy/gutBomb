@@ -5,7 +5,7 @@ Requires p5.js > p5js.org
 
 //this is the constructor
 function Button( _origin, _width, _height, _text, _mainColor, _image){
-	// textSize(16);
+	textSize(28);
 
 	this.origin 			= createVector(_origin.x, _origin.y);
 	this.width 				= _width;
@@ -29,12 +29,15 @@ function Button( _origin, _width, _height, _text, _mainColor, _image){
 
 	this.textScale				= 1.0;
 
-	if (this.tWidth > this.boundingWidth ){
-		this.textScale = this.boundingWidth/(this.tWidth);
+	if (this.height < windowHeight*.25){		
+		if (this.tWidth/1.5 > this.boundingWidth ){
+			this.textScale = this.boundingWidth/(this.tWidth*0.65);
+		}
+	} else {
+		if (this.tWidth/2 > this.boundingWidth ){
+			this.textScale = this.boundingWidth/(this.tWidth)*2;
+		}
 	}
-
-
-
 }
 
 Button.prototype.display = function(){

@@ -19,10 +19,13 @@ var lastButtonSelected;
 var idleTime;
 var countdown;
 var map;
+var showMap = false;
 var countrySelected;
 var gol;
 var lastAnswerArray = new Array();
 var eColis;
+var colorTemplates = new Array();
+var colorCounter = 0;
 
 function preload(){
 	museoSans100 = loadFont('assets/MuseoSans-100.otf');
@@ -38,6 +41,9 @@ function setup() {
 	createCanvas(windowWidth, windowHeight);
 	created = true;
 	hue = 0;
+	setupColors();
+
+
 	setupButtons();
 	navBar = new NavigationBar();
 	backButton = new NavigationButton(createVector(50, windowHeight/2), true, -1);
@@ -49,13 +55,41 @@ function setup() {
 	idleTime = 0;
 	countdown = true;
   	gol = new GOL();
+  	
 
 	eColis = new Array();
 
 	for (var i = 0; i < 25; i++) {
 		eColi = new Ecoli( createVector( random(windowWidth), random(windowHeight) ), createVector(random(-2, -.25), random(-2, -.25)) );
+		eColi.setColor(colorTemplates[colorCounter]);
 		eColis.push(eColi);
 	};
+}
+
+function setupColors(){
+
+	//hsv values from indd template from AMNH
+
+	var gold			= [41, 86, 99];
+	var brightYellow	= [57, 100, 98];
+	var appleGreen		= [72, 61, 84];
+	var seaBlue			= [178, 43, 80];
+	var deepBlue		= [189, 100, 84];
+	var lightBlue		= [208, 41, 96];
+	var purple			= [253, 45, 53];
+	var pink			= [313, 50, 67];
+	var magenta 		= [332, 83, 75];
+
+	colorTemplates.push(gold);
+	colorTemplates.push(brightYellow);
+	colorTemplates.push(appleGreen);
+	colorTemplates.push(seaBlue);
+	colorTemplates.push(deepBlue);
+	colorTemplates.push(lightBlue);
+	colorTemplates.push(purple);
+	colorTemplates.push(pink);
+	colorTemplates.push(magenta);
+
 }
 
 function draw() {
@@ -84,27 +118,31 @@ function draw() {
 	navBar.update(totalQuestions, currentQuestionId);	
 	navBar.display();
 	if (currentQuestionId > 1){
-		backButton.display(hue);		
+		backButton.display(colorTemplates[colorCounter]);		
 	}
 
 	if (currentQuestionId == totalQuestions){		
-		map.style.visibility = "visible";
+		// map.style.visibility = "visible";
 		forwardButton.submitActive = true;
 		forwardButton.display();
 	} else {
 		forwardButton.submitActive = false;
-		forwardButton.display(hue);
+		forwardButton.display(colorTemplates[colorCounter]);
 	}
 	
 	exitMenu.display();
 	thankYou.display();
 	checkAnswerCount();
 
+	if (showMap){
+		map.style.visibility = "visible";
+	} else {
+		map.style.visibility = "hidden";
+	}
+
 
 	if (thankYou.on){
 		if (idleTime > 5){
-			map = document.getElementById("vmap");
-			map.style.visibility = "hidden";
 			idleTime = 0;
 			submitAnswers('/reset');
 			setTimeout(window.open("http://localhost:4000/", "_self"), 5);
@@ -148,12 +186,17 @@ function mousePressed(){
 		if (forwardButton.active){
 			if (dist(mouseX, mouseY, fwdButtonLocation.x, fwdButtonLocation.y) < 75/2) {
 				
+				// only for the very last question
+
+				if (currentQuestionId == totalQuestions-1){
+					showMap = true;
+				}
+
 				if (currentQuestionId == totalQuestions){
 					//display thank you message for 5 seconds
 					thankYou.on = true;
 					checkAnswers(submitAnswers);
-					// setTimeout(submitAnswers('/reset'), 10000);
-					// setTimeout(window.open("http://localhost:4000/", "_self"), 10100);
+					showMap = false;
 				}
 
 				if (lastAnswerArray[currentQuestionId-1]){
@@ -164,18 +207,23 @@ function mousePressed(){
 				
 				checkAnswers(submitAnswers);
 				clearButtons();
-				hue += 36;
+				// hue += 36;
+				colorCounter ++;
 
-				console.log("Hue: "+hue);
+				if (colorCounter == colorTemplates.length){
+					colorCounter = 0;
+				} 
 
-				if (hue > 200 && hue < 260){
-					hue = 288;
-				}
+				console.log(colorCounter);
 
-				if (hue >= 360) hue = 0;
+				// if (hue > 200 && hue < 260){
+				// 	hue = 288;
+				// }
+
+				// if (hue >= 360) hue = 0;
 
 				for (bacteria of eColis){
-					bacteria.hue = hue;
+					bacteria.setColor(colorTemplates[colorCounter]);
 				}
 
 			}
@@ -187,9 +235,15 @@ function mousePressed(){
 				console.log("back button clicked");
 				submitAnswers('http://localhost:4000/back');
 				clearButtons();
-				hue -= 36;
+				colorCounter --;
+
+				if (colorCounter < 0){
+					colorCounter = colorTemplates.length-1;
+				} 
+
 				for (bacteria of eColis){
-					bacteria.hue = hue;
+					// bacteria.hue = hue;
+					bacteria.setColor(colorTemplates[colorCounter]);
 				}						
 			}
 		} 
@@ -337,7 +391,7 @@ function setupButtons(){
 
 	for (var i = 0; i < jsonObject.question.answers.length; i++) {
 
-		var button = new Button(origin, width, height, jsonObject.question.answers[i], [hue, 204, 100], images[i]);
+		var button = new Button(origin, width, height, jsonObject.question.answers[i], colorTemplates[colorCounter], images[i]);
 		buttons.push(button);		
 
 		origin.x += width + margin;

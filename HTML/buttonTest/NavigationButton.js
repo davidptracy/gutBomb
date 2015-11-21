@@ -13,7 +13,7 @@ function NavigationButton(_origin, _active, _direction){
 
 }
 
-NavigationButton.prototype.display = function(_hue){
+NavigationButton.prototype.display = function(_color){
 	
 	// IF WE'RE ON THE FINAL QUESTION
 	if (this.submitActive){
@@ -101,7 +101,7 @@ NavigationButton.prototype.display = function(_hue){
 		} 
 		else{
 
-			fill(_hue, 204, 100);
+			fill(_color[0], _color[1], _color[2]);
 			push();
 				noStroke();
 				translate(this.origin.x, this.origin.y);

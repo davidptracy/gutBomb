@@ -39,7 +39,7 @@ function setup() {
 
 	for (var i = 0; i < 25; i++) {
 		eColi = new Ecoli( createVector( random(windowWidth), random(windowHeight) ), createVector(random(-2, -.25), random(-2, -.25)) );
-		eColi.hue = 201;
+		eColi.setColor([hue, 100, 100]);
 		eColis.push(eColi);
 	};
 

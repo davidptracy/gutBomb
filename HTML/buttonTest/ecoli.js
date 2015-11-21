@@ -21,6 +21,7 @@ function Ecoli( _origin, _startVelocity ){
 	this.scale = random(.25, 1.0);
 	this.rotation = random(100);
 	this.hue = 0;
+	this.mainColor = [0, 100, 100];
 
 	// console.log("eColi created!");
 
@@ -67,7 +68,7 @@ Ecoli.prototype.display = function(){
 		push();
 			translate(0,sin(this.interval)*this.amplitude*2);
 			noStroke();
-			fill(this.hue,100*this.scale,100);
+			fill(this.mainColor[0],this.mainColor[1]*this.scale,this.mainColor[2]);
 			ellipse(0,0,this.radius,this.radius);
 			rect(0,-this.radius/2, this.radius, this.radius);
 			ellipse(this.radius,0,this.radius,this.radius);
@@ -132,7 +133,7 @@ Ecoli.prototype.drawCurve = function(_amplitude){
 		var a = 0.0;
 		var inc = TWO_PI/25.0;
 		
-		stroke(this.hue,100*this.scale,100);
+		stroke(this.mainColor[0],this.mainColor[1]*this.scale,this.mainColor[2]);
 		// stroke(0);
 		strokeWeight(5);
 
@@ -147,4 +148,8 @@ Ecoli.prototype.drawCurve = function(_amplitude){
 		
 	pop();
 
+}
+
+Ecoli.prototype.setColor = function(_color){
+	this.mainColor = _color;
 }
