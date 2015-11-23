@@ -382,7 +382,7 @@ function setupButtons(){
 
 	requiredAnswers = jsonObject.question.type;
 	currentQuestion = jsonObject.question.question;
-	origin = createVector(windowWidth*.2, 200);
+	origin = createVector(windowWidth*.2, 275);
 	width = windowWidth*.3;
 	margin = height*.25;
 	images = jsonObject.question.image;
