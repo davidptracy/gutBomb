@@ -44,7 +44,7 @@ WelcomeButton.prototype.display = function(){
 			push();
 				translate((this.width/2)-(this.margin/2), (this.height/2)-(this.margin/2));
 				fill(0);
-				textFont(museoSans700);
+				textFont(museoSans500);
 				textSize(48);
 				textAlign(CENTER, CENTER);
 				text(this.text,0,0);
@@ -66,6 +66,7 @@ WelcomeButton.prototype.display = function(){
 			translate((this.width/2)-(this.margin/2), (this.height/2)-(this.margin/2));
 			fill(0);
 			textSize(48);
+			textFont(museoSans700);
 			textAlign(CENTER, CENTER);
 			text(this.text,0,0);
 			pop();
