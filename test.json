@@ -13,11 +13,11 @@
             "cockroach"
          ],
          "image": [
+            "images/01/00_mite.jpg", 
             "images/01/01_Ecoli.jpg", 
-            "images/01/01_Ecoli.jpg", 
-            "images/01/01_Ecoli.jpg", 
-            "images/01/01_Ecoli.jpg", 
-            "images/01/05_Cockroach.jpg"
+            "images/01/02_Ebola.jpg", 
+            "images/01/03_Fruitfly.jpg", 
+            "images/01/04_Cockroach.jpg"
          ]
       },
       {  

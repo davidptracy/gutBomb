@@ -1,0 +1,62 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script language="javascript" type="text/javascript" src="p5.js"></script>
+  <script language="javascript" type="text/javascript" src="sketch.js"></script>
+  <script language="javascript" type="text/javascript" src="ecoli.js"></script>
+  <script language="javascript" type="text/javascript" src="button.js"></script>
+  <script language="javascript" type="text/javascript" src="NavigationBar.js"></script>
+  <script language="javascript" type="text/javascript" src="ExitMenu.js"></script>
+  <script language="javascript" type="text/javascript" src="ThanksMessage.js"></script>
+  <script language="javascript" type="text/javascript" src="NavigationButton.js"></script>
+  <script language="javascript" type="text/javascript" src="bacteria.js"></script>
+  <link href="map/jqvmap.css" media="screen" rel="stylesheet" type="text/css"/>
+  <script type="text/javascript" src="../map/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="../map/jquery.vmap.js"></script>
+  <script type="text/javascript" src="../map/jquery.vmap.world.js" charset="utf-8"></script>
+  <script type="text/javascript" src="../map/jquery.vmap.sampledata.js"></script>
+  <!-- this line removes any default padding and style. you might only need one of these values set. -->
+  <style> body {padding: 0; margin: 0;} 
+
+          #defaultCanvas { position:absolute; top: 0px;}
+  </style>
+  <title>Button Test</title>
+</head>
+<script>
+    
+    // console.log(countrySelected);
+    function touch_detect() {
+        return 'ontouchstart' in window || 'onmsgesturechange' in window || navigator.msMaxTouchPoints > 0;
+    }
+    jQuery(document).ready(function () {
+        jQuery('#vmap').vectorMap({
+          map: 'world_en',
+          backgroundColor: '#ffffff',
+          color: '#333333',
+          hoverOpacity: 0.7,
+          selectedColor: '#666666',
+          enableZoom: true,
+          showTooltip: true,
+          values: sample_data,
+          scaleColors: ['#C8EEFF', '#006491'],
+          normalizeFunction: 'polynomial',
+          onRegionClick: function (element, code, region) {
+            if (!touch_detect()) {
+              countrySelected = region;
+              buttons[0].selected = true;
+              // console.log(region);
+            }
+          },
+          onRegionOver: function (element, code, region) {
+            if (touch_detect()) {
+                // countrySelected = region;
+                // console.log(region);
+            }
+          }
+        });
+      });
+    </script>
+<body>
+      <div id="vmap" style="width: 70%; height: 65%; position:relative; margin:0px auto; top: 200px; z-index: 999;"></div>
+</body>
+</html>

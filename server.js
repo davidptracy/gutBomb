@@ -74,10 +74,10 @@ var Survey = mongoose.model('Survey', surveySchema);
 var Answer = mongoose.model('Answer', answerSchema);
 
 var newSurvey;
-app.use(express.static('HTML/buttonTest/'));
+app.use(express.static('HTML/interface/'));
 app.use(express.static('HTML/'));
 
-var html_dir = 'HTML/buttonTest/';
+var html_dir = 'HTML/interface/';
 
 
 app.get('/', function(req, res) {
@@ -92,9 +92,9 @@ app.get('/HTML/:fileName',function(req,res){
   var filename = req.params.fileName;
   res.sendfile(filename, {root: './HTML'})
 } )
-app.get('/HTML/buttonTest/:fileName',function(req,res){
+app.get('/HTML/interface/:fileName',function(req,res){
   var filename = req.params.fileName;
-  res.sendfile(filename, {root: './HTML/buttonTest'})
+  res.sendfile(filename, {root: './HTML/interface'})
 } )
 // ======================================================
 // =====================NEW SURVEY=======================
