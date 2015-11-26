@@ -37,7 +37,7 @@ function setup() {
 
 	eColis = new Array();
 
-	for (var i = 0; i < 25; i++) {
+	for (var i = 0; i < 50; i++) {
 		eColi = new Ecoli( createVector( random(windowWidth), random(windowHeight) ), createVector(random(-2, -.25), random(-2, -.25)) );
 		eColi.hue = 201;
 		eColis.push(eColi);

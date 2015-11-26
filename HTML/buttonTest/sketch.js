@@ -42,8 +42,8 @@ function setup() {
 	navBar = new NavigationBar();
 	backButton = new NavigationButton(createVector(50, windowHeight/2), true, -1);
 	forwardButton = new NavigationButton(createVector(windowWidth-50, windowHeight/2 ), false, 1);
-	exitMenu = new ExitMenu(createVector(windowWidth/2, windowHeight*.35));
-	thankYou = new ThanksMessage(createVector(windowWidth/2, windowHeight*.35));
+	exitMenu = new ExitMenu(createVector(windowWidth/2, windowHeight/2));
+	thankYou = new ThanksMessage(createVector(windowWidth/2, windowHeight/2));
 	currentQuestionId = parseInt(jsonObject.question.id);
 	totalQuestions  = parseInt(jsonObject.length);
 	idleTime = 0;
@@ -52,7 +52,7 @@ function setup() {
 
 	eColis = new Array();
 
-	for (var i = 0; i < 25; i++) {
+	for (var i = 0; i < 35; i++) {
 		eColi = new Ecoli( createVector( random(windowWidth), random(windowHeight) ), createVector(random(-2, -.25), random(-2, -.25)) );
 		eColis.push(eColi);
 	};
@@ -87,8 +87,8 @@ function draw() {
 		backButton.display(hue);		
 	}
 
-	if (currentQuestionId == totalQuestions){		
-		map.style.visibility = "visible";
+	if (currentQuestionId == totalQuestions && !thankYou.on){		
+		// map.style.visibility = "visible";
 		forwardButton.submitActive = true;
 		forwardButton.display();
 	} else {
