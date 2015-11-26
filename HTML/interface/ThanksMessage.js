@@ -31,12 +31,12 @@ ThanksMessage.prototype.display  = function(){
 			// shadow
 			push();
 				translate(12.5, 12.5);
-				fill(0,0,100);
+				fill(0,0,86);
 				rect(-width/2, -height/2, width, height);
 
 			pop();
 
-			fill(0,0,86);
+			fill(0,0,100);
 			rect(-width/2, -height/2, width, height);
 
 			push();
