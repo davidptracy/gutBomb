@@ -20,7 +20,7 @@ ThanksMessage.prototype.display  = function(){
 
 		colorMode(HSB);
 		noStroke();
-		fill(0,0,0,.7);
+		fill(255,0,90,.5);
 		rect(0,0, windowWidth, windowHeight);
 		
 		push();
@@ -31,18 +31,19 @@ ThanksMessage.prototype.display  = function(){
 			// shadow
 			push();
 				translate(12.5, 12.5);
-				fill(0,0,0,.25);
-				rect(-width/2, -height/2, width, height, 20);
+				fill(0,0,100);
+				rect(-width/2, -height/2, width, height);
 
 			pop();
 
 			fill(0,0,86);
-			rect(-width/2, -height/2, width, height, 20);
+			rect(-width/2, -height/2, width, height);
 
 			push();
 				// translate(0, 0);
 				fill(0);
 				textSize(36);
+				textFont(museoSans100);
 				textAlign(CENTER, CENTER);
 				text("Thank you for your time!",0,0);
 			pop();
