@@ -11540,7 +11540,7 @@ var p5 = function(sketch, node, sync) {
       var loadingScreen = document.getElementById(this._loadingScreenId);
       if(!loadingScreen){
         loadingScreen = document.createElement('div');
-        loadingScreen.innerHTML = 'Loading...';
+        // loadingScreen.innerHTML = 'Loading...';
         loadingScreen.style.position = 'absolute';
         loadingScreen.id = this._loadingScreenId;
         var node = this._userNode || document.body;
