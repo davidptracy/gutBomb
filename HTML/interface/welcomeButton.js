@@ -12,6 +12,7 @@ function WelcomeButton( _origin, _width, _height, _text, _mainColor){
 	this.text 				= _text;
 	this.mainColor 			= _mainColor;
 	this.selected 			= false;
+	this.textSize			= 80;
 
 }
 
@@ -44,8 +45,8 @@ WelcomeButton.prototype.display = function(){
 			push();
 				translate((this.width/2)-(this.margin/2), (this.height/2)-(this.margin/2));
 				fill(0);
-				textFont(museoSans500);
-				textSize(48);
+				textFont(museoSans100);
+				textSize(this.textSize);
 				textAlign(CENTER, CENTER);
 				text(this.text,0,0);
 			pop();
@@ -65,8 +66,8 @@ WelcomeButton.prototype.display = function(){
 			push();
 			translate((this.width/2)-(this.margin/2), (this.height/2)-(this.margin/2));
 			fill(0);
-			textSize(48);
-			textFont(museoSans700);
+			textSize(this.textSize);
+			textFont(museoSans500);
 			textAlign(CENTER, CENTER);
 			text(this.text,0,0);
 			pop();

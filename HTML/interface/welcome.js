@@ -64,14 +64,20 @@ function draw() {
 
 	welcomeButton.display();
 
+
+	// Instructions for survey
 	rectMode(CENTER);
 	fill(255, 255, 255, 200);
-	noStroke();
-	rect(windowWidth/2, 3*windowHeight/4, 700, 250);
+	// noStroke();
+	stroke(100, 50);
+	strokeWeight(.5);
+	var centerPoint = createVector( windowWidth/2, (windowHeight/2 + (windowHeight - (windowHeight/2) )/2 ) ); 
+	rect( centerPoint.x, centerPoint.y, 700, 250);
 	fill(0);
 	textSize(20);
 	textFont(museoSans100);
-	text(welcomeCopy, windowWidth/2, 3*windowHeight/4+25, 600, 250);
+	textAlign(LEFT, CENTER);
+	text(welcomeCopy, centerPoint.x, centerPoint.y, 600, 250);
 
 }
 
@@ -136,66 +142,6 @@ function checkAnswerCount(){
 
 }
 
-function displayQuestion(_question){
-
-	push();
-		translate(windowWidth/2, 65);
-		translate(this.buttonWidth/2, this.buttonHeight/2);
-		fill(0);
-		textFont(museoSans700);
-		textSize(36);
-		textAlign(CENTER, CENTER);
-		rectMode(CENTER);
-		text(currentQuestion,0,0, windowWidth*.6, 75);	
-		
-		push();
-			translate(0,75);
-			fill(0);
-			textSize(18);
-			textAlign(CENTER, CENTER);
-			rectMode(CENTER);
-			if(requiredAnswers > 1){
-				text("[ Select "+requiredAnswers+ " Answers ]",0,0, windowWidth*.6, 100);
-			} else {
-				text("[ Select "+requiredAnswers+ " Answer ]",0,0, windowWidth*.6, 100);
-			}
-			
-		pop();
-
-	pop();
-
-}
-
-function setupButtons(){
-
-	// if (jsonObject.answers.length > 4){
-	// 	height = windowHeight*.15;
-	// } else {
-	// 	height = windowHeight*.25;
-	// }
-
-	requiredAnswers = jsonObject.type;
-	currentQuestion = jsonObject.question;
-	origin = createVector(windowWidth*.2, 200);
-	width = windowWidth*.3;
-	margin = height*.25;
-	images = jsonObject.images;
-
-	var selectedAnswers = new Array(jsonObject.answers.length);
-
-	for (var i = 0; i < jsonObject.answers.length; i++) {
-
-		var button = new Button(origin, width, height, jsonObject.answers[i], [hue, 204, 100], images[i]);
-		buttons.push(button);
-
-		origin.x += width + margin;
-
-		if (origin.x > windowWidth*.6) {
-			origin.x = windowWidth*.2;
-			origin.y += height+margin;
-		} 
-	};
-}
 
 function clearButtons(){
 	for (var i = 0; i < buttons.length; i++) {
