@@ -18,7 +18,7 @@ var countdown;
 var map;
 var showMap = false;
 var countrySelected;
-var gol;
+// var gol;
 var lastAnswerArray = new Array();
 var eColis;
 var colorTemplates = new Array();
@@ -41,7 +41,6 @@ function setup() {
 	hue = 0;
 	setupColors();
 
-
 	setupButtons();
 	navBar = new NavigationBar();
 	backButton = new NavigationButton(createVector(50, windowHeight/2), true, -1);
@@ -52,7 +51,7 @@ function setup() {
 	totalQuestions  = parseInt(jsonObject.length);
 	idleTime = 0;
 	countdown = true;
-  	gol = new GOL();
+  	// gol = new GOL();
   	
 
 	eColis = new Array();
@@ -74,9 +73,9 @@ function setupColors(){
 	var seaBlue			= [178, 43, 80];
 	var deepBlue		= [189, 100, 84];
 	var lightBlue		= [208, 41, 96];
-	var purple			= [253, 45, 53];
-	var pink			= [313, 50, 67];
-	var magenta 		= [332, 83, 75];
+	// var purple			= [253, 45, 53];
+	// var pink			= [313, 50, 67];
+	// var magenta 		= [332, 83, 75];
 
 	colorTemplates.push(gold);
 	colorTemplates.push(brightYellow);
@@ -84,9 +83,9 @@ function setupColors(){
 	colorTemplates.push(seaBlue);
 	colorTemplates.push(deepBlue);
 	colorTemplates.push(lightBlue);
-	colorTemplates.push(purple);
-	colorTemplates.push(pink);
-	colorTemplates.push(magenta);
+	// colorTemplates.push(purple);
+	// colorTemplates.push(pink);
+	// colorTemplates.push(magenta);
 
 }
 
@@ -100,7 +99,7 @@ function draw() {
     pop();
 
     for (var i = 0; i < eColis.length; i++) {
-		eColis[i].update(hue);
+		eColis[i].update();
 		eColis[i].display();
 	};
 
@@ -244,6 +243,11 @@ function mousePressed(){
 					bacteria.setColor(colorTemplates[colorCounter]);
 				}						
 			}
+
+			if (currentQuestionId == totalQuestions){
+				//display thank you message for 5 seconds
+				showMap = false;
+			}
 		} 
 
 
@@ -340,7 +344,20 @@ function displayQuestion(_question){
 		translate(this.buttonWidth/2, this.buttonHeight/2);
 		fill(0);
 		textFont(museoSans500);
-		textSize(36);
+		textSize(48);
+
+		// scale the question text if it's too large
+
+		var tWidth 					= textWidth(currentQuestion);
+		var boundingWidth 			= windowWidth*.85 - 50;
+		var textScale				= 1.0;
+
+		if (tWidth/2 > boundingWidth ){
+			textScale = boundingWidth / (tWidth)*2;
+		}
+
+		textSize(48*textScale);
+
 		textAlign(CENTER, CENTER);
 		rectMode(CENTER);
 		text(currentQuestion,0,0, windowWidth*.85, 75);	
@@ -349,7 +366,7 @@ function displayQuestion(_question){
 			translate(0,100);
 			fill(0);
 			textFont(museoSans100);
-			textSize(18);
+			textSize(24);
 			textAlign(CENTER, CENTER);
 			rectMode(CENTER);
 			if(requiredAnswers > 1){
@@ -374,13 +391,14 @@ function setupButtons(){
 
 	if (jsonObject.question.answers.length > 4){
 		height = windowHeight*.15;
+		origin = createVector(windowWidth*.2, 275);
 	} else {
-		height = windowHeight*.25;
+		height = windowHeight*.15;
+		origin = createVector(windowWidth*.2, 375);
 	}
 
 	requiredAnswers = jsonObject.question.type;
 	currentQuestion = jsonObject.question.question;
-	origin = createVector(windowWidth*.2, 275);
 	width = windowWidth*.3;
 	margin = height*.25;
 	images = jsonObject.question.image;
