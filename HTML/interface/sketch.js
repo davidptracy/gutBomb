@@ -1,7 +1,4 @@
-/* TO DO
-slider bar
-*/
-
+// dummy JSON object for page load
 var jsonObject = {"question":{"id":"1","type":"multiple","question":"Which of the following are considered microbes?","answers":["mite","E. coli","Ebola","fruit fly","cockroach"],"image":["images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg"]},"responses":[],"length":17};
 var created;
 var origin, width, height, margin, selected, requiredAnswers, hue;
@@ -27,6 +24,7 @@ var eColis;
 var colorTemplates = new Array();
 var colorCounter = 0;
 
+// ==== load fonts, setup variables for the map ====
 function preload(){
 	museoSans100 = loadFont('assets/MuseoSans-100.otf');
 	museoSans500 = loadFont('assets/MuseoSans-500.otf');
@@ -338,17 +336,17 @@ function checkAnswerCount(){
 function displayQuestion(_question){
 
 	push();
-		translate(windowWidth/2, 65);
+		translate(windowWidth/2, 100);
 		translate(this.buttonWidth/2, this.buttonHeight/2);
 		fill(0);
-		textFont(museoSans700);
-		textSize(32);
+		textFont(museoSans500);
+		textSize(36);
 		textAlign(CENTER, CENTER);
 		rectMode(CENTER);
 		text(currentQuestion,0,0, windowWidth*.85, 75);	
 		
 		push();
-			translate(0,75);
+			translate(0,100);
 			fill(0);
 			textFont(museoSans100);
 			textSize(18);
