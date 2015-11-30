@@ -31,6 +31,7 @@ function preload(){
 	museoSans700 = loadFont('assets/MuseoSans-700.otf');
 	museoSans900 = loadFont('assets/MuseoSans-900.otf');
 	map = document.getElementById("vmap");
+	map.style.marginTop = "50px";
 	map.style.visibility = "hidden";
 }
 
