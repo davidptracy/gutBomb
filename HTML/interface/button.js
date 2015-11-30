@@ -5,7 +5,7 @@ Requires p5.js > p5js.org
 
 //this is the constructor
 function Button( _origin, _width, _height, _text, _mainColor, _image){
-	textSize(28);
+	
 
 	this.origin 			= createVector(_origin.x, _origin.y);
 	this.width 				= _width;
@@ -14,6 +14,9 @@ function Button( _origin, _width, _height, _text, _mainColor, _image){
 	this.text 				= _text;
 	this.mainColor 			= _mainColor;
 	this.selected 			= false;
+	this.fontSize			= 42;
+
+	textSize(this.fontSize);
 
 	if (_image){
 		this.image 			= loadImage(_image);
@@ -71,8 +74,8 @@ Button.prototype.display = function(){
 			push();
 				translate(this.margin, this.margin/2);
 				fill(0);
-				textFont(museoSans100);
-				textSize(28*this.textScale);
+				textFont(museoSans500);
+				textSize(this.fontSize*this.textScale);
 				textAlign(LEFT, CENTER);
 				// rect(0,0, this.width-this.margin*2, this.height-this.margin*2);
 				text(this.text,0,0, this.width-this.margin*2, this.height-this.margin*2);
@@ -82,12 +85,12 @@ Button.prototype.display = function(){
 				image(this.image,0,0, this.height-this.margin, this.height-this.margin);
 			pop();
 			push();
-				translate(this.margin*8, this.margin);
+				translate(this.margin*8, this.margin/2);
 				fill(0);
-				textFont(museoSans100);
-				textSize(28*this.textScale);
-				textAlign(LEFT, TOP);
-				text(this.text,0,0);
+				textFont(museoSans500);
+				textSize(this.fontSize*this.textScale);
+				textAlign(LEFT, CENTER);
+				text(this.text,0,0, this.width-this.margin*2, this.height-this.margin*2);
 			pop();
 		}
 
@@ -107,7 +110,7 @@ Button.prototype.display = function(){
 					translate(this.margin, this.margin/2);
 					fill(0);
 					textFont(museoSans500);
-					textSize(28*this.textScale);
+					textSize(this.fontSize*this.textScale);
 					textAlign(LEFT, CENTER);
 					// rect(0,0, this.width-this.margin*2, this.height-this.margin*2);
 					text(this.text,0,0, this.width-this.margin*2, this.height-this.margin*2);
@@ -117,12 +120,12 @@ Button.prototype.display = function(){
 					image(this.image,0,0, this.height-this.margin, this.height-this.margin);
 				pop();
 				push();
-					translate(this.margin*8, this.margin);
+					translate(this.margin*8, this.margin/2);
 					fill(0);
 					textFont(museoSans500);
-					textSize(28*this.textScale);
-					textAlign(LEFT, TOP);
-					text(this.text,0,0);
+					textSize(this.fontSize*this.textScale);
+					textAlign(LEFT, CENTER);
+					text(this.text,0,0, this.width-this.margin*2, this.height-this.margin*2);
 				pop();
 			}
 
