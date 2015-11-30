@@ -27,7 +27,7 @@ function Ecoli( _origin, _startVelocity ){
 
 }
 
-Ecoli.prototype.update = function(_hue){
+Ecoli.prototype.update = function(){
 	
 	try{
 
