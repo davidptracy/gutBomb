@@ -14,7 +14,7 @@ var backButton;
 var forwardButton;
 var eColis;
 
-var welcomeCopy = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+var welcomeCopy = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
 function preload(){
 	museoSans100 = loadFont('assets/MuseoSans-100.otf');
@@ -39,7 +39,7 @@ function setup() {
 
 	for (var i = 0; i < 40; i++) {
 		eColi = new Ecoli( createVector( random(windowWidth), random(windowHeight) ), createVector(random(-2, -.25), random(-2, -.25)) );
-		eColi.setColor([hue, 100, 100]);
+		eColi.setColor([201, 100, 100]);
 		eColis.push(eColi);
 	};
 
@@ -54,7 +54,9 @@ function draw() {
 	background(255);
 
 	for (var i = 0; i < eColis.length; i++) {
-		eColis[i].update(201);
+		// var dist = map(eColis[i].location.x, -100, windowWidth + 100, 0, 360);
+		// eColis[i].setColor([dist, 100,100]);
+		eColis[i].update();
 		eColis[i].display();
 	};
 
@@ -74,7 +76,7 @@ function draw() {
 	var centerPoint = createVector( windowWidth/2, (windowHeight/2 + (windowHeight - (windowHeight/2) )/2 ) ); 
 	rect( centerPoint.x, centerPoint.y, 700, 250);
 	fill(0);
-	textSize(20);
+	textSize(30);
 	textFont(museoSans100);
 	textAlign(LEFT, CENTER);
 	text(welcomeCopy, centerPoint.x, centerPoint.y, 600, 250);
@@ -97,6 +99,8 @@ function mousePressed(){
 		}	
 	} else {
 		eColi = new Ecoli( createVector( mouseX, mouseY ), createVector(random(-2, -.25), random(-2, -.25)) );
+		var dist = map(eColi.location.x, -100, windowWidth + 100, 0, 360);
+		eColi.setColor([dist,100,100]);
 		eColis.push(eColi);
 		eColis.shift();
 	}	
