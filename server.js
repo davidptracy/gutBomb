@@ -275,7 +275,7 @@ function convertArrayOfObjectsToCSV(data) {
     return result;
 }
 
-var cronJob = '05 06 * * *';            //minutes hours months weeks days
+var cronJob = '19 55 * * *';            //minutes hours months weeks days
 crontab.scheduleJob(cronJob, function(){
     var today = moment().startOf('day').local(),  
     lastWeek = moment(today).subtract(-7,'data');
