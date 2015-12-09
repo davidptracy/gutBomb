@@ -25,6 +25,7 @@ function preload(){
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
+	noCursor();
 	hue = 201;
 	width 	= windowWidth/6;
 	height 	= windowHeight/4;
