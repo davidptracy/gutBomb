@@ -264,7 +264,7 @@ function convertArrayOfObjectsToCSV(data) {
         result += lineDelimiter
     }
     var today = moment().startOf('day').local().format('MM-DD-YYYY');
-    var name = today + ".csv";
+    var name = "../dbLogs/"+today + ".csv";
     fs.writeFile(name, result, function(err) {
     if(err) {
         return console.log(err);
@@ -272,10 +272,13 @@ function convertArrayOfObjectsToCSV(data) {
 
     console.log("The file was saved!");
     }); 
+    Survey.remove({}, function(err) { 
+     console.log('collection removed') 
+    });
     return result;
 }
 
-var cronJob = '55 19 * * *';            //minutes hours months weeks days
+var cronJob = '45 18 * * 0';            //minutes hours months weeks days
 crontab.scheduleJob(cronJob, function(){
     var today = moment().startOf('day').local(),  
     lastWeek = moment(today).subtract(-7,'data');
@@ -289,4 +292,5 @@ crontab.scheduleJob(cronJob, function(){
       }
   }).
   exec(process);
+
 });
