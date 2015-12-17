@@ -264,7 +264,7 @@ function convertArrayOfObjectsToCSV(data) {
         result += lineDelimiter
     }
     var today = moment().startOf('day').local().format('MM-DD-YYYY');
-    var name = "../dbLogs/"+today + ".csv";
+    var name = "dbLogs/"+today + ".csv";
     fs.writeFile(name, result, function(err) {
     if(err) {
         return console.log(err);
