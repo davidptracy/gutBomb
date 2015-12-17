@@ -32,7 +32,7 @@ var fs = require('fs');
 var questions;
 var responses = [];
 
-fs.readFile('test.json', 'utf8', function (err, data) {
+fs.readFile('questions.json', 'utf8', function (err, data) {
   if (err) throw err;
   questions = JSON.parse(data);
 

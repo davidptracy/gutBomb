@@ -1,0 +1,211 @@
+{  
+   "version":"timestamp",
+   "questions":[  
+      {  
+         "id":"1",
+         "type":"multiple",
+         "question":"Which of the following are considered microbes?",
+         "answers":[  
+            "mite",
+            "E. coli",
+            "Ebola",
+            "fruit fly",
+            "cockroach"
+         ],
+         "image": [
+            "images/01/00_mite.jpg", 
+            "images/01/01_Ecoli.jpg", 
+            "images/01/02_Ebola.jpg", 
+            "images/01/03_Fruitfly.jpg", 
+            "images/01/04_Cockroach.jpg"
+         ]
+      },
+      {  
+         "id":"2",
+         "type":"1",
+         "question":"What percentage of the total number of cells in your body are microbes?",
+         "answers":[  
+            "None",
+            "up to 25%",
+            "a majority, more than 51%",
+            "All of them, 100%"
+         ],
+         "image": []
+      },{
+         "id": "3",
+         "type": "multiple",
+         "question": "If we told you that microbes live on your skin, and that every human has a different set of microbes, which of the following factors do you think might influence these differences?",
+         "answers": [
+            "diet",
+            "how often you clean your house",
+            "where you live (e.g. in a city, on a farm, etc.)",
+            "how ofen you shower",
+            "none of these factors matter; it is completely random" 
+         ],
+         "image" : []
+      },{  
+         "id":"4",
+         "type":"2",
+         "question":"If we told you that microbes are on most of your household items, which of the following TWO items would have the most similar kinds of microbes on them?",
+         "answers":[  
+            "a toilet seat", 
+            "a cutting board",
+            "a TV",
+            "a pillow",
+            "a flower pot"
+         ],
+         "image": []
+      },{
+         "id": "5",
+         "type": "multiple",
+         "question": "What do you think microbes do on your skin?",
+         "answers": [
+            "cause disease",
+            "make vitamins",
+            "make antibiotics",
+            "coexist with our cells",
+            "nothing; they are just there"
+            ],
+            "image": []
+      },{
+         "id": "6",
+         "type": "1",
+         "question": "What do you think the impact of bacterial diversity in your digestive tract and on yourskin might be?",
+         "answers": [
+            "Very positive",
+            "Positive",
+            "Neutral",
+            "Negative",
+            "Very negative"
+            ],
+         "image": []
+      },{
+         "id": "7",
+         "type": "1",
+         "question": "Do you take probiotics?",
+         "answers": [
+            "I don't know what a probiotic is",
+            "Yes, regularly",
+            "Yes, but infrequently",
+            "Never"
+            ],
+         "image": []
+      },{
+         "id": "8",
+         "type": "multiple",
+         "question": "Which of these is an antibiotic? (Select all that apply)",
+         "answers": [
+            "Aspirin",
+            "Diazepam (e.g. Valium)",
+            "Acetaminophen (e.g. Tylenol/Paracetamol)",
+            "Penicillin",
+            "Antihistamine (e.g. Benadryl)"
+            ],
+         "image": []
+      },{
+         "id": "9",
+         "type": "2",
+         "question": "Which TWO words of the following come to mind when you hear the word microbe?",
+         "answers": [
+            "Germ",
+            "Disease",
+            "Tiny",
+            "Beneficial",
+            "Essential",
+            "Biodiversity"
+            ],
+         "image": []
+      },{
+         "id": "10",
+         "type": "1",
+         "question": "How often do you use hand sanitizer (excluding soap)?",
+         "answers": [
+            "Frequently",
+            "Sometimes",
+            "Rarely",
+            "Never",
+            "I don’t know what hand sanitizer is"
+            ],
+         "image": [] 
+      },{
+          "id": "11",
+         "type": "1",
+         "question": "What are your thoughts on the following statement: \r We should be more informed about our use and potential overuse of antibiotics.",
+         "answers": [
+            "I agree and am fully aware of the importance of this statement.",
+            "Knowing more about this would influence my behavior.",
+            "I am well-informed.",
+            "This does not interest me personally.",
+            "I disagree with this statement entirely."
+            ],
+         "image": [] 
+      },{
+         "id": "12",
+         "type": "multiple",
+         "question": "What is your attitude toward the fact that there are microbes all over and in your body? (check as many as are true for you)",
+         "answers": [
+            "Yuck!",
+            "Who cares?",
+            "Tell me more!",
+            "Makes me feel healthy!",
+            "Other"
+            ],
+         "image": [] 
+      },{
+         "id": "13",
+         "type": "1",
+         "question": "What are your thoughts on the following statement: Microbes are essential to my good health.",
+         "answers": [
+            "I disagree with this statement entirely.",
+            "I agree and am fully aware of the importance of this statement.",
+            "Knowing more about this would influence my behavior",
+            "This does not interest me personally"
+           ],
+         "image": [] 
+      },{
+         "id": "14",
+         "type": "1",
+         "question": "What are your thoughts on the following statement: A diverse ecosystem of microbes in and on your body is beneficial to my health.",
+         "answers": [
+            "This does not interest me personally",
+            "Knowing more about this would influence my behavior",
+            "I disagree with this statement entirely.",
+            "I agree and am fully aware of the importance of this statement."
+           ],
+         "image": [] 
+      },{
+         "id": "15",
+         "type": "1",
+         "question": "Please select your age range:",
+         "answers": [
+            "Under 18 years old",
+            "18-30 years old",
+            "30-40 years old",
+            "40-50 years old",
+            "50-60 years old",
+            "Over 60 years old"
+           ],
+         "image": [] 
+      }
+      ,{
+         "id": "16",
+         "type": "1",
+         "question": "What is your gender?",
+         "answers": [
+            "Male",
+            "Female",
+            "I'd rather not say"
+           ],
+         "image": [] 
+      }
+      ,{
+         "id": "17",
+         "type": "1",
+         "question": "Where are you from?",
+         "answers": [
+            "MapView"
+           ],
+         "image": [] 
+      }
+   ] 
+}
