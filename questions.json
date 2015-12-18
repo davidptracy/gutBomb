@@ -130,7 +130,7 @@
       },{
           "id": "11",
          "type": "1",
-         "question": "What are your thoughts on the following statement: \r We should be more informed about our use and potential overuse of antibiotics.",
+         "question": "What are your thoughts on the following statement: \n We should be more informed about our use and potential overuse of antibiotics.",
          "answers": [
             "I agree and am fully aware of the importance of this statement.",
             "Knowing more about this would influence my behavior.",

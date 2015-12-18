@@ -14,6 +14,7 @@ var backButton;
 var forwardButton;
 var eColis;
 
+var welcome = "Welcome";
 var welcomeCopy = "Why does diversity in nature matter to your health?\n\nShare your thoughts with us!";
 
 function preload(){
@@ -28,9 +29,10 @@ function setup() {
 	noCursor();
 	hue = 201;
 	width 	= windowWidth/6;
+	// height 	= windowHeight/4;
 	height 	= windowHeight/4;
-	origin 	= createVector(windowWidth/2-width, windowHeight/2-height);
-	welcomeButton = new WelcomeButton(origin, width*2, height, "Welcome", [hue, 100, 100]);
+	origin 	= createVector(windowWidth/2-width, windowHeight/2+150);
+	welcomeButton = new WelcomeButton(origin, width*2, height, "Start", [hue, 100, 100]);
 	navBar = new NavigationBar();
 	backButton = new NavigationButton(createVector(50, windowHeight/2), true, -1);
 	forwardButton = new NavigationButton(createVector(windowWidth-50, windowHeight/2 ), false, 1);
@@ -68,19 +70,42 @@ function draw() {
 	welcomeButton.display();
 
 
-	// Instructions for survey
+
+	// WELCOME
 	rectMode(CENTER);
-	fill(255, 255, 255, 200);
-	// noStroke();
-	stroke(100, 50);
-	strokeWeight(.5);
-	var centerPoint = createVector( windowWidth/2, (windowHeight/2 + (windowHeight - (windowHeight/2) )/2 ) ); 
-	rect( centerPoint.x, centerPoint.y, width*2, 250);
-	fill(0);
-	textSize(42);
-	textFont(museoSans500);
-	textAlign(CENTER, TOP);
-	text(welcomeCopy, centerPoint.x, centerPoint.y+10, 600, 250);
+	push();
+		translate(0,-50);
+		fill(255, 255, 255, 200);
+		// noStroke();
+		stroke(100, 50);
+		strokeWeight(.5);
+		var centerPoint = createVector( windowWidth/2, (windowHeight/2 - (windowHeight - (windowHeight/2) )/2 ) ); 
+		rect( centerPoint.x, centerPoint.y, width*2, 150);
+		fill(0);
+		textSize(96);
+		textFont(museoSans500);
+		textAlign(CENTER, TOP);
+		text(welcome, centerPoint.x, centerPoint.y-10, 600, 150);
+	pop();
+
+
+	// Instructions for survey
+	push();
+		translate(0,-35);
+		rectMode(CENTER);
+		fill(255, 255, 255, 200);
+		// noStroke();
+		stroke(100, 50);
+		strokeWeight(.5);
+		var centerPoint = createVector( windowWidth/2, (windowHeight/2)); 
+		// var centerPoint = createVector( windowWidth/2, (windowHeight/2 + (windowHeight - (windowHeight/2) )/2 ) ); 
+		rect( centerPoint.x, centerPoint.y, width*2, 250);
+		fill(0);
+		textSize(36);
+		textFont(museoSans100);
+		textAlign(CENTER, TOP);
+		text(welcomeCopy, centerPoint.x, centerPoint.y+20, 600, 250);
+	pop();
 
 }
 

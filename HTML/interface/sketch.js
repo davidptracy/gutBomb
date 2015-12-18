@@ -110,9 +110,21 @@ function draw() {
 	rect(0,0, windowWidth, windowHeight);
 
 	displayQuestion();
+
+	// var textScales = new Array();
+	
+	//fix to adjust all text sizes
 	for (var i = 0; i < buttons.length; i++) {
 		buttons[i].display();
+		//find the smallest text scale, set the other buttons text scale to match
+		// textScales.push(buttons[i].textScale);
 	};
+
+	// var minimum = Array.min(textScales);
+
+	// for (var i = 0; i < buttons.length; i++) {
+	// 	buttons[i].textScale = minimum;
+	// };
 
 	navBar.update(totalQuestions, currentQuestionId);	
 	navBar.display();
@@ -514,5 +526,10 @@ if (thankYou.on){
 	submitAnswers('/reset');
 	setTimeout(window.open("/", "_self"), 5000);
 }
+
+
+Array.min = function( array ){
+    return Math.min.apply( Math, array );
+};
 
 
