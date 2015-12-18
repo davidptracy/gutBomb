@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+        <string>com.amnh.nodeLaunch</string>
+    <key>ProgramArguments</key>
+       <array>
+            <string>/usr/local/Cellar/mongodb/3.0.7/bin/mongod</string>
+            <string>--fork</string>
+            <string>--logpath</string>
+            <string>/Users/sepakiosk/Documents/sepaKioskApp/mongoLogs/mongod.log</string>
+            <string>--dbpath</string>
+            <string>/Users/sepakiosk/Documents/sepaKioskApp/data</string>
+       </array>
+    <key>StandardErrorPath</key>
+		<string>/Users/sepakiosk/Documents/sepaKioskApp/mongoError.log</string>
+	<key>WorkingDirectory</key>
+		<string>/Users/sepakiosk/Documents/sepaKioskApp/</string>
+</dict>
+</plist>

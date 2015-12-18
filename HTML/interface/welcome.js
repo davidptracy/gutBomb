@@ -14,7 +14,7 @@ var backButton;
 var forwardButton;
 var eColis;
 
-var welcomeCopy = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+var welcomeCopy = "Why does diversity in nature matter to your health?\n\nShare your thoughts with us!";
 
 function preload(){
 	museoSans100 = loadFont('assets/MuseoSans-100.otf');
@@ -75,12 +75,12 @@ function draw() {
 	stroke(100, 50);
 	strokeWeight(.5);
 	var centerPoint = createVector( windowWidth/2, (windowHeight/2 + (windowHeight - (windowHeight/2) )/2 ) ); 
-	rect( centerPoint.x, centerPoint.y, 700, 250);
+	rect( centerPoint.x, centerPoint.y, width*2, 250);
 	fill(0);
-	textSize(30);
-	textFont(museoSans100);
-	textAlign(LEFT, CENTER);
-	text(welcomeCopy, centerPoint.x, centerPoint.y, 600, 250);
+	textSize(42);
+	textFont(museoSans500);
+	textAlign(CENTER, TOP);
+	text(welcomeCopy, centerPoint.x, centerPoint.y+10, 600, 250);
 
 }
 
