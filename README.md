@@ -105,6 +105,13 @@ Here is a description of the JSON properties of the questions Array:
 - **answers**: an array that holds all possible answers. Up to six answers can be provided
 - **image**: an array that holds relative path links to image files, if they answer has an associated image. The size of this array must match the size of the answers array
 
+##Restarting the Server after changes
+
+1. Open Terminal
+2. `killall node`
+3. `cd *projectDirectory*`
+4. `node server.js` 
+
 ##Accessing Answers
 
 By default the app is set to save a dump of the database to a CSV file on Sundays at 6:45p. These CSV files will be saved to a directory called *dbLogs* outside of the application directory. 
