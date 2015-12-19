@@ -6,11 +6,11 @@
          "type":"multiple",
          "question":"Which of the following are considered microbes?",
          "answers":[  
-            "mite",
+            "Mite",
             "E. coli",
             "Ebola",
-            "fruit fly",
-            "cockroach"
+            "Fruit Fly",
+            "Cockroach"
          ],
          "image": [
             "images/01/00_mite.jpg", 
@@ -26,8 +26,8 @@
          "question":"What percentage of the total number of cells in your body are microbes?",
          "answers":[  
             "None",
-            "up to 25%",
-            "a majority, more than 51%",
+            "Up to 25%",
+            "A majority, more than 51%",
             "All of them, 100%"
          ],
          "image": []
@@ -36,23 +36,23 @@
          "type": "multiple",
          "question": "If we told you that microbes live on your skin, and that every human has a different set of microbes, which of the following factors do you think might influence these differences?",
          "answers": [
-            "diet",
-            "how often you clean your house",
-            "where you live (e.g. in a city, on a farm, etc.)",
-            "how ofen you shower",
-            "none of these factors matter; it is completely random" 
+            "Diet",
+            "How often you clean your house",
+            "Where you live (e.g. in a city, on a farm, etc.)",
+            "How ofen you shower",
+            "None of these factors matter; it is completely random" 
          ],
          "image" : []
       },{  
          "id":"4",
          "type":"2",
-         "question":"If we told you that microbes are on most of your household items, which of the following TWO items would have the most similar kinds of microbes on them?",
+         "question":"If we told you that microbes are on most of your household items, which items would have the most similar kinds of microbes on them?",
          "answers":[  
-            "a toilet seat", 
-            "a cutting board",
-            "a TV",
-            "a pillow",
-            "a flower pot"
+            "Toilet seat", 
+            "Cutting board",
+            "TV",
+            "Pillow",
+            "Flower pot"
          ],
          "image": []
       },{
@@ -60,11 +60,11 @@
          "type": "multiple",
          "question": "What do you think microbes do on your skin?",
          "answers": [
-            "cause disease",
-            "make vitamins",
-            "make antibiotics",
-            "coexist with our cells",
-            "nothing; they are just there"
+            "Cause disease",
+            "Make vitamins",
+            "Make antibiotics",
+            "Coexist with our cells",
+            "Nothing; they are just there"
             ],
             "image": []
       },{
@@ -93,7 +93,7 @@
       },{
          "id": "8",
          "type": "multiple",
-         "question": "Which of these is an antibiotic? (Select all that apply)",
+         "question": "Which of these is an antibiotic?",
          "answers": [
             "Aspirin",
             "Diazepam (e.g. Valium)",
