@@ -41,7 +41,7 @@ function setup() {
 	created = true;
 	hue = 0;
 	setupColors();
-	noCursor();
+	// noCursor();
 
 	setupButtons();
 	navBar = new NavigationBar();
@@ -144,6 +144,8 @@ function draw() {
 	exitMenu.display();
 	thankYou.display();
 	checkAnswerCount();
+
+	// drawTimer();
 
 	if (showMap){
 		map.style.visibility = "visible";
@@ -362,13 +364,30 @@ function displayQuestion(_question){
 
 		// scale the question text if it's too large
 
-		var tWidth 					= textWidth(currentQuestion);
+		// if there's a line break in the string - take that into account
+		var splitQuestion = currentQuestion.split("\n");
+		var splitWidth = textWidth(splitQuestion[0]);
+
+		var tWidth 	= textWidth(currentQuestion);
+
+		console.log("Split Question Length: " + splitWidth);
+		console.log("Regular Question Length: " + tWidth);
+
 		var boundingWidth 			= windowWidth*.85 - 50;
 		var textScale				= 1.0;
 
-		if (tWidth/2 > boundingWidth ){
-			textScale = boundingWidth / (tWidth)*2;
+		// if splitWidth is different from the tWidth, scale the text differently
+		if (splitWidth < tWidth){
+			textScale = (boundingWidth) / (splitWidth*1.5);
+			console.log("They're different!");
+		} else if(tWidth/2 > boundingWidth ){
+			textScale = boundingWidth / (tWidth)*2.25;
 		}
+
+
+		// if (tWidth/2 > boundingWidth ){
+		// 	textScale = boundingWidth / (tWidth)*2.25;
+		// }
 
 		textSize(48*textScale);
 
@@ -419,9 +438,32 @@ function setupButtons(){
 
 	var selectedAnswers = new Array(jsonObject.question.answers.length);
 
+	// edit to match text sizes across all buttons
+
+	//default text size
+	textSize(42);
+	var tWidthLast;
+
+	// find the longest length answer
+	var lengths = new Array();
+	for (var i = 0; i < jsonObject.question.answers.length; i++) {
+		var tempWidth = textWidth(jsonObject.question.answers[i]);
+		console.log("temp: "+tempWidth);
+		//compare it to the last textWidth
+		if (i == 0){
+			tWidthLast = tempWidth;
+		} else {
+			if (tempWidth > tWidthLast){
+				tWidthLast = tempWidth;
+			}
+		}
+	}
+
+	console.log ("max: "+tWidthLast);
+
 	for (var i = 0; i < jsonObject.question.answers.length; i++) {
 
-		var button = new Button(origin, width, height, jsonObject.question.answers[i], colorTemplates[colorCounter], images[i]);
+		var button = new Button(origin, width, height, jsonObject.question.answers[i], colorTemplates[colorCounter], images[i], tWidthLast);
 		buttons.push(button);		
 
 		origin.x += width + margin;
@@ -516,7 +558,6 @@ function timerIncrement(){
 		}		
 	}
 }
-
 
 // =================================================================
 // ======================== SUBMIT TIMER ===========================
