@@ -4,7 +4,7 @@ Requires p5.js > p5js.org
 */
 
 //this is the constructor
-function Button( _origin, _width, _height, _text, _mainColor, _image){
+function Button( _origin, _width, _height, _text, _mainColor, _image, _textWidthMax){
 	
 
 	this.origin 			= createVector(_origin.x, _origin.y);
@@ -15,6 +15,7 @@ function Button( _origin, _width, _height, _text, _mainColor, _image){
 	this.mainColor 			= _mainColor;
 	this.selected 			= false;
 	this.fontSize			= 42;
+	// this.fontSizeMax		= _textWidthMax;
 
 	textSize(this.fontSize);
 
@@ -27,7 +28,7 @@ function Button( _origin, _width, _height, _text, _mainColor, _image){
 
 	// textFont(museoSans100);
 
-	this.tWidth 				= textWidth(this.text);
+	this.tWidth 				= _textWidthMax;
 	this.boundingWidth 			= this.width-this.margin*2;
 
 	this.textScale				= 1.0;
