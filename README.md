@@ -53,7 +53,7 @@ You can run the app without launch agents by doing the following via Terminal:
 
 `mongod --fork --logpath mongoLogs/mongoLog.log --dbpath data` *Note: data should be where you specified it above*
 
-`node server`
+`forever start server.js`
 
 In your browser, open localhost:4000 *(or whatever you changed the port to in server.js)*
 
