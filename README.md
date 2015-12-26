@@ -51,7 +51,7 @@ Copy files in the `launchAgents` folder to `/Users/*currentUser*/Library/LaunchA
 
 You can run the app without launch agents by doing the following via Terminal:
 
-`mongod --dbpath data` *Note: data should be where you specified it above*
+`mongod --fork --logpath mongoLogs/mongoLog.log --dbpath data` *Note: data should be where you specified it above*
 
 `node server`
 
