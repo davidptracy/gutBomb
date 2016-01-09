@@ -97,11 +97,12 @@ Button.prototype.display = function(){
 
 		pop();
 
+		// if the button IS selected
 	} else {
 		push();
 			translate(this.origin.x+this.margin, this.origin.y+this.margin);
 			colorMode(HSB);
-			fill(this.mainColor[0], this.mainColor[1], this.mainColor[2]);
+			fill(this.mainColor[0], this.mainColor[1], this.mainColor[2]-25);
 			noStroke();
 			rect(0, 0, (this.width-this.margin), (this.height-this.margin) );
 
