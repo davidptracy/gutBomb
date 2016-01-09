@@ -17,6 +17,7 @@ var idleTime;
 var countdown;
 var map;
 var showMap = false;
+var showQuestion = true;
 var countrySelected;
 // var gol;
 var lastAnswerArray = new Array();
@@ -45,8 +46,8 @@ function setup() {
 
 	setupButtons();
 	navBar = new NavigationBar();
-	backButton = new NavigationButton(createVector(50, windowHeight/2), true, -1);
-	forwardButton = new NavigationButton(createVector(windowWidth-50, windowHeight/2 ), false, 1);
+	backButton = new NavigationButton(createVector(100, windowHeight/2), true, -1);
+	forwardButton = new NavigationButton(createVector(windowWidth-100, windowHeight/2 ), false, 1);
 	exitMenu = new ExitMenu(createVector(windowWidth/2, windowHeight/2));
 	thankYou = new ThanksMessage(createVector(windowWidth/2, windowHeight/2));
 	currentQuestionId = parseInt(jsonObject.question.id);
@@ -109,7 +110,10 @@ function draw() {
 	fill(255,255,255,200);
 	rect(0,0, windowWidth, windowHeight);
 
-	displayQuestion();
+	if (showQuestion){
+		displayQuestion();	
+	}
+	
 
 	// var textScales = new Array();
 	
@@ -144,8 +148,6 @@ function draw() {
 	exitMenu.display();
 	thankYou.display();
 	checkAnswerCount();
-
-	// drawTimer();
 
 	if (showMap){
 		map.style.visibility = "visible";
@@ -197,7 +199,7 @@ function mousePressed(){
 		
 		var fwdButtonLocation = forwardButton.getButtonLocation();
 		if (forwardButton.active){
-			if (dist(mouseX, mouseY, fwdButtonLocation.x, fwdButtonLocation.y) < 75/2) {
+			if (dist(mouseX, mouseY, fwdButtonLocation.x, fwdButtonLocation.y) < 100/2) {
 				
 				// only for the very last question
 
@@ -207,6 +209,7 @@ function mousePressed(){
 
 				if (currentQuestionId == totalQuestions){
 					//display thank you message for 5 seconds
+					showQuestion = false;
 					thankYou.on = true;
 					checkAnswers(submitAnswers);
 					showMap = false;
@@ -229,12 +232,6 @@ function mousePressed(){
 
 				console.log(colorCounter);
 
-				// if (hue > 200 && hue < 260){
-				// 	hue = 288;
-				// }
-
-				// if (hue >= 360) hue = 0;
-
 				for (bacteria of eColis){
 					bacteria.setColor(colorTemplates[colorCounter]);
 				}
@@ -243,7 +240,7 @@ function mousePressed(){
 		}
 
 		var backButtonLocation = backButton.getButtonLocation();
-		if (dist(mouseX, mouseY, backButtonLocation.x, backButtonLocation.y) < 75/2){
+		if (dist(mouseX, mouseY, backButtonLocation.x, backButtonLocation.y) < 100/2){
 			if (currentQuestionId > 1){
 				console.log("back button clicked");
 				submitAnswers('/back');
@@ -402,10 +399,10 @@ function displayQuestion(_question){
 			textSize(24);
 			textAlign(CENTER, CENTER);
 			rectMode(CENTER);
-			if(requiredAnswers > 1){
-				text("( Select "+requiredAnswers+ " Answers )",0,0, windowWidth*.6, 100);
+			if(requiredAnswers > 1 || requiredAnswers == 'multiple'){
+				text("( Select "+requiredAnswers+ " answers )",0,0, windowWidth*.6, 100);
 			} else {
-				text("( Select "+requiredAnswers+ " Answer )",0,0, windowWidth*.6, 100);
+				text("( Select "+requiredAnswers+ " answer )",0,0, windowWidth*.6, 100);
 			}
 			
 		pop();
