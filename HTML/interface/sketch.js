@@ -42,7 +42,7 @@ function setup() {
 	created = true;
 	hue = 0;
 	setupColors();
-	// noCursor();
+	noCursor();
 
 	setupButtons();
 	navBar = new NavigationBar();
@@ -94,12 +94,6 @@ function setupColors(){
 
 function draw() {
 	background(255);
-	// gol.generate();
-
-	push();
-		// translate(windowWidth/8, windowWidth/8);
-    	// gol.display();
-    pop();
 
     for (var i = 0; i < eColis.length; i++) {
 		eColis[i].update();
