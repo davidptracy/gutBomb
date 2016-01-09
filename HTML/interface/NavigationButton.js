@@ -7,7 +7,7 @@ function NavigationButton(_origin, _active, _direction){
 
 	this.origin = _origin;
 	this.active = _active;
-	this.radius = 75;
+	this.radius = 100;
 	this.direction = _direction;
 	this.submitActive = false;
 
