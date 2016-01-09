@@ -31,8 +31,8 @@ function setup() {
 	width 	= windowWidth/6;
 	// height 	= windowHeight/4;
 	height 	= windowHeight/4;
-	origin 	= createVector(windowWidth/2-width, windowHeight/2+150);
-	welcomeButton = new WelcomeButton(origin, width*2, height, "Start", [hue, 100, 100]);
+	origin 	= createVector(windowWidth/2-width*.625, windowHeight/2+150);
+	welcomeButton = new WelcomeButton(origin, width*1.25, height*.75, "Start", [hue, 100, 100]);
 	navBar = new NavigationBar();
 	backButton = new NavigationButton(createVector(50, windowHeight/2), true, -1);
 	forwardButton = new NavigationButton(createVector(windowWidth-50, windowHeight/2 ), false, 1);
