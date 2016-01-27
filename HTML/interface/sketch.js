@@ -498,8 +498,10 @@ function submitAnswers(_answerString) {
     	console.log (xhttp.responseText);
     	jsonObject = JSON.parse(xhttp.responseText);
 
-    	currentQuestionId = parseInt(jsonObject.question.id); 
+    	currentQuestionId = parseInt(jsonObject.question.id);
 
+    	totalQuestions  = parseInt(jsonObject.length);
+    	
     	clickCount = 0;   	
     	
     	// clearButtons();
