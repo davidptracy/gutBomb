@@ -272,25 +272,45 @@ function convertArrayOfObjectsToCSV(data) {
 
     console.log("The file was saved!");
     }); 
+
+
     Survey.remove({}, function(err) { 
-     console.log('collection removed') 
+      console.log('collection removed') 
     });
     return result;
+
+
 }
 
 var cronJob = '45 18 * * 0';            //minutes hours months weeks days
+
 crontab.scheduleJob(cronJob, function(){
-    var today = moment().startOf('day').local(),  
+
+  var today = moment().startOf('day').local(),
     lastWeek = moment(today).subtract(-7,'data');
+    tomorrow = moment(today).add(1, 'days');
 
   Survey.find({
         surveyVersion: 'timestamp',
 
       timedate: {
         $gte: lastWeek.toDate(),
-        $lt: today.toDate()
+        $lt: tomorrow.toDate()
       }
   }).
   exec(process);
+
+  // var today = moment().startOf('day').local(),  
+  // lastWeek = moment(today).subtract(-7,'data');
+
+  // Survey.find({
+  //       surveyVersion: 'timestamp',
+
+  //     timedate: {
+  //       $gte: lastWeek.toDate(),
+  //       $lt: today.toDate()
+  //     }
+  // }).
+  // exec(process);
 
 });
