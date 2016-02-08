@@ -282,7 +282,7 @@ function convertArrayOfObjectsToCSV(data) {
 
 }
 
-var cronJob = '45 18 * * 0';            //minutes hours months weeks days
+var cronJob = '45 18 * * 1';            //minutes hours months weeks days
 
 crontab.scheduleJob(cronJob, function(){
 
