@@ -252,7 +252,7 @@ function convertArrayOfObjectsToCSV(data) {
                     var qNum = j+1;
                     var aNum = x+1;
                     key += qNum.toString() + 'a' + aNum.toString();
-                    result+= key;
+                    result+= key + columnDelimiter;
                   }else if(answers[j].answers[x] == 0) {
                     result+= columnDelimiter;
                   }else{
