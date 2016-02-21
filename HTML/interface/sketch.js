@@ -42,7 +42,8 @@ function setup() {
 	created = true;
 	hue = 0;
 	setupColors();
-	noCursor();
+
+	// noCursor();
 
 	setupButtons();
 	navBar = new NavigationBar();
@@ -205,6 +206,8 @@ function mousePressed(){
 					//display thank you message for 5 seconds
 					showQuestion = false;
 					thankYou.on = true;
+					getFullJson('/review') 
+					// thankYou.update( getFullJson('/review') );
 					checkAnswers(submitAnswers);
 					showMap = false;
 				}
@@ -361,8 +364,8 @@ function displayQuestion(_question){
 
 		var tWidth 	= textWidth(currentQuestion);
 
-		console.log("Split Question Length: " + splitWidth);
-		console.log("Regular Question Length: " + tWidth);
+		// console.log("Split Question Length: " + splitWidth);
+		// console.log("Regular Question Length: " + tWidth);
 
 		var boundingWidth 			= windowWidth*.85 - 50;
 		var textScale				= 1.0;
@@ -439,7 +442,7 @@ function setupButtons(){
 	var lengths = new Array();
 	for (var i = 0; i < jsonObject.question.answers.length; i++) {
 		var tempWidth = textWidth(jsonObject.question.answers[i]);
-		console.log("temp: "+tempWidth);
+		// console.log("temp: "+tempWidth);
 		//compare it to the last textWidth
 		if (i == 0){
 			tWidthLast = tempWidth;
@@ -450,7 +453,7 @@ function setupButtons(){
 		}
 	}
 
-	console.log ("max: "+tWidthLast);
+	// console.log ("max: "+tWidthLast);
 
 	for (var i = 0; i < jsonObject.question.answers.length; i++) {
 
@@ -486,7 +489,7 @@ function clearButtons(){
 }
 
 // =================================================================
-// =================== AJAX CALL TO SERVER =========================
+// =================== AJAX CALLS TO SERVER =========================
 // =================================================================
 
 function submitAnswers(_answerString) {
@@ -516,6 +519,29 @@ function submitAnswers(_answerString) {
   xhttp.send();
 
 }
+
+//FOR THANK YOU MESSAGE ANSWER REVIEW
+function getFullJson(_answerString) {
+  var xhttp = new XMLHttpRequest();  
+
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {    	
+    	// console.log (xhttp.responseText);
+    	var jsonResponses = JSON.parse(xhttp.responseText);
+    	// console.log(jsonResponses);
+    	thankYou.update( jsonResponses );
+    	// return jsonResponses;
+    }
+  }
+
+  //submit
+  console.log("Sending: "+_answerString);
+  xhttp.open("GET", _answerString, true);
+  xhttp.send();
+
+}
+
+
 
 // Initial request to start survey
 setTimeout(function(){
@@ -553,14 +579,8 @@ function timerIncrement(){
 }
 
 // =================================================================
-// ======================== SUBMIT TIMER ===========================
+// ======================== ARRAY FUNCTION =========================
 // =================================================================
-
-if (thankYou.on){
-	submitAnswers('/reset');
-	setTimeout(window.open("/", "_self"), 5000);
-}
-
 
 Array.min = function( array ){
     return Math.min.apply( Math, array );

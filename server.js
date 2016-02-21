@@ -147,6 +147,14 @@ app.get('/back', function(req, res){
 
 })
 
+app.get('/review', function(req, res){
+  // curQuestion-- ;
+  // console.log(responses[curQuestion]);
+  //var response =  JSON.stringify(responses[curQuestion].question) + '\n';
+  res.end(JSON.stringify(responses));
+
+})
+
 
 app.get('/reset', function(req, res){
   curQuestion = 0;

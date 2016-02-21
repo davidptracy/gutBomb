@@ -7,12 +7,13 @@ Requires p5.js > p5js.org
 function ThanksMessage(_origin){
 	this.origin = _origin;
 	this.on = false;
+	this.json;
 }
 
 ThanksMessage.prototype.display  = function(){
 
 	var width = 500;
-	var height = 200;
+	var height = 500;
 
 	this.buttonWidth = width*.25;
 
@@ -48,6 +49,53 @@ ThanksMessage.prototype.display  = function(){
 				text("Thank you for your time!",0,0);
 			pop();
 
+			//Review of answers
+			push();
+				fill(0);
+				// translate(-width/2+50,75);
+				translate(0,75);
+				textSize(18);
+				textFont(museoSans500);
+				textAlign(CENTER, CENTER);
+				text("Your Responses:",0,0);
+			pop();
+
+			//The Answers
+			//if this.json is defined ...
+			if (typeof this.json !== 'undefined') {
+			    for (var i = 0; i < this.json.length; i++) {
+					push();
+						fill(0);
+						translate(-width/2+50,25*i);
+						textSize(18);
+						textFont(museoSans100);
+						textAlign(LEFT, CENTER);
+						text(this.json[i].question.question,0,0);
+					pop();
+				};
+			}
+
+
+			// push();
+			// 	fill(0);
+			// 	translate(-width/2+50,75);
+			// 	textSize(18);
+			// 	textFont(museoSans100);
+			// 	textAlign(LEFT, CENTER);
+			// pop();
+
 		pop();
 	}
+}
+
+ThanksMessage.prototype.update  = function(_json){
+
+	this.json = _json;
+	// console.log(this.json[0].question.question);
+
+	for (var i = 0; i < this.json.length; i++) {
+		console.log(this.json[i].question.question);
+		console.log(this.json[i].responses);
+	};
+
 }

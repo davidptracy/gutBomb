@@ -13,7 +13,8 @@
             "Essential",
             "Biodiversity"
             ],
-         "image": []
+         "image": [],
+         "descriptor": "subjective"
       },
       {  
          "id":"2",
@@ -26,7 +27,8 @@
             "Never",
             "I don’t know what hand sanitizer is"
          ],
-         "image": []
+         "image": [],
+         "descriptor": "subjective"
       },{
          "id": "3",
          "type": "multiple",
@@ -38,7 +40,8 @@
             "Penicillin",
             "Antihistamine (e.g. Benadryl)"
             ],
-         "image" : []
+         "image" : [],
+         "descriptor": "objective"
       },{  
          "id":"4",
          "type": "1",
@@ -49,7 +52,8 @@
             "Yes, but infrequently",
             "Never"
             ],
-         "image": []
+         "image": [],
+         "descriptor": "subjective"
       },{
          "id": "5",
          "type": "1",
@@ -60,7 +64,8 @@
             "This does not interest me personally.",
             "I wish I knew more."
             ],
-            "image": []
+            "image": [],
+         "descriptor": "subjective"
       },{
          "id": "6",
          "type": "1",
@@ -73,7 +78,8 @@
             "over 65 years old",
             "I decline to answer"
            ],
-         "image": [] 
+         "image": [],
+         "descriptor": "subjective"
       }
       ,{
          "id": "7",
@@ -84,7 +90,8 @@
             "Female",
             "I decline to answer"
            ],
-         "image": [] 
+         "image": [],
+         "descriptor": "subjective"
       }
       ,{
          "id": "8",
@@ -93,7 +100,8 @@
          "answers": [
             "MapView"
            ],
-         "image": [] 
+         "image": [],
+         "descriptor": "subjective" 
       }
    ] 
 }
