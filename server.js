@@ -274,9 +274,9 @@ function convertArrayOfObjectsToCSV(data) {
     }); 
 
 
-    Survey.remove({}, function(err) { 
-      console.log('collection removed') 
-    });
+    // Survey.remove({}, function(err) { 
+    //   console.log('collection removed') 
+    // });
     return result;
 
 
