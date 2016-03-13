@@ -13,7 +13,7 @@ function ThanksMessage(_origin){
 ThanksMessage.prototype.display  = function(){
 
 	var width = 750;
-	var height = 600;
+	var height = 700;
 
 	this.buttonWidth = width*.25;
 
@@ -46,7 +46,7 @@ ThanksMessage.prototype.display  = function(){
 				// translate(0, 0);
 				fill(0);
 				textSize(36);
-				textFont(museoSans100);
+				textFont(museoSans500);
 				textAlign(CENTER, CENTER);
 				text("Thank you for your time!",0,0);
 			pop();
@@ -56,8 +56,8 @@ ThanksMessage.prototype.display  = function(){
 				fill(0);
 				// translate(-width/2+50,75);
 				translate(0,75);
-				textSize(18);
-				textFont(museoSans500);
+				textSize(24);
+				textFont(museoSans100);
 				textAlign(CENTER, CENTER);
 				text("Your Responses:",0,0);
 			pop();
@@ -76,10 +76,6 @@ ThanksMessage.prototype.display  = function(){
 
 						//if it's an objective type question ...
 						//compare the responses array to the correct answers array
-
-						// console.log(this.json[i].question.descriptor);
-
-
 						if ( this.json[i].question.descriptor == "objective" ){
 
 							// console.log("YOUR ANSWER ARRAY:     " + this.json[i].responses);
@@ -90,9 +86,7 @@ ThanksMessage.prototype.display  = function(){
 								var tempAnswers = "";
 								tempAnswerLength = 0;
 								var answerCount = 0;
-
 								push();
-
 									for (var j = 0; j < this.json[i].responses.length; j++){
 										
 										if (this.json[i].responses[j] == this.json[i].question.correctAnswer[j]){
@@ -105,7 +99,7 @@ ThanksMessage.prototype.display  = function(){
 											if (j > 0){
 												translate(tempAnswerLength + 15, 0);
 											};
-									
+
 											textFont(museoSans500);
 											text(tempAnswers,0,0);
 											tempAnswerLength = textWidth(tempAnswers);
@@ -122,38 +116,48 @@ ThanksMessage.prototype.display  = function(){
 											tempAnswerLength = textWidth(tempAnswers);
 										}
 									};
-
 								pop();
-
-								// textFont(museoSans100);
-								// text(tempAnswers,0,0);
 							pop();
 						} 
 
 						//if it's a subjective type question just list the responses
 						else {							
 							push();
-								translate(0,25);							
-								//loop through responses use those as index for selected answers
-								var tempAnswers = "";
-								var answerCount = 0;
-								for (var j = 0; j < this.json[i].responses.length; j++) {
-									// console.log(this.json[i].responses[j]);
-									//if a 1 is present then that was a selected answers								
-									if(this.json[i].responses[j] == 1){
-										if(answerCount > 0){
-											tempAnswers = tempAnswers.concat(" , ");
-											tempAnswers = tempAnswers.concat(this.json[i].question.answers[j]);										
-										} else {
-											tempAnswers = tempAnswers.concat(this.json[i].question.answers[j]);
-											answerCount ++;
-										}								
-									}
-								};
-								textFont(museoSans100);
-								text(tempAnswers,0,0);
+
+								// if its the last question ... the map question
+								if(i == this.json.length - 1){
+									translate(0,25);
+									tempAnswers = countrySelected;
+									textFont(museoSans100);
+									text(tempAnswers,0,0);		
+								}
+
+								else {
+									translate(0,25);							
+									//loop through responses use those as index for selected answers
+									var tempAnswers = "";
+									var answerCount = 0;
+									for (var j = 0; j < this.json[i].responses.length; j++) {
+										// console.log(this.json[i].responses[j]);
+										//if a 1 is present then that was a selected answers								
+										if(this.json[i].responses[j] == 1){
+											if(answerCount > 0){
+												tempAnswers = tempAnswers.concat(" , ");
+												tempAnswers = tempAnswers.concat(this.json[i].question.answers[j]);										
+											} else {
+												tempAnswers = tempAnswers.concat(this.json[i].question.answers[j]);
+												answerCount ++;
+											}								
+										}
+									};
+									textFont(museoSans100);
+									text(tempAnswers,0,0);									
+								}
+
 							pop();
 						}
+
+
 
 					pop();
 				};
