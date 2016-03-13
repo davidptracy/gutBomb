@@ -12,8 +12,8 @@ function ThanksMessage(_origin){
 
 ThanksMessage.prototype.display  = function(){
 
-	var width = 500;
-	var height = 500;
+	var width = 750;
+	var height = 600;
 
 	this.buttonWidth = width*.25;
 
@@ -39,6 +39,8 @@ ThanksMessage.prototype.display  = function(){
 
 			fill(0,0,100);
 			rect(-width/2, -height/2, width, height);
+
+			translate(0,-225);
 
 			push();
 				// translate(0, 0);
@@ -66,23 +68,51 @@ ThanksMessage.prototype.display  = function(){
 			    for (var i = 0; i < this.json.length; i++) {
 					push();
 						fill(0);
-						translate(-width/2+50,25*i);
+						translate(-width/2+50,125+50*i);
 						textSize(18);
-						textFont(museoSans100);
+						textFont(museoSans500);
 						textAlign(LEFT, CENTER);
 						text(this.json[i].question.question,0,0);
+
+						//if it's an objective type question ...
+						//compare the responses array to the correct answers array
+
+						if ( this.json[i].question.descriptor == "objective" ){
+							for (var j = 0; j < this.json[i].responses.length; j++){
+								if (this.json[i].responses[j] == this.json[i].question.correctAnswer[j]){
+									console.log("We have a match!");
+								}
+							}
+						} 
+
+						//if it's a subjective type question just list the responses
+						else {							
+							push();
+								translate(0,25);							
+								//loop through responses use those as index for selected answers
+								var tempAnswers = "";
+								var answerCount = 0;
+								for (var j = 0; j < this.json[i].responses.length; j++) {
+									// console.log(this.json[i].responses[j]);
+									//if a 1 is present then that was a selected answers								
+									if(this.json[i].responses[j] == 1){
+										if(answerCount > 0){
+											tempAnswers = tempAnswers.concat(" , ");
+											tempAnswers = tempAnswers.concat(this.json[i].question.answers[j]);										
+										} else {
+											tempAnswers = tempAnswers.concat(this.json[i].question.answers[j]);
+											answerCount ++;
+										}								
+									}
+								};
+								textFont(museoSans100);
+								text(tempAnswers,0,0);
+							pop();
+						}
+
 					pop();
 				};
 			}
-
-
-			// push();
-			// 	fill(0);
-			// 	translate(-width/2+50,75);
-			// 	textSize(18);
-			// 	textFont(museoSans100);
-			// 	textAlign(LEFT, CENTER);
-			// pop();
 
 		pop();
 	}
@@ -95,7 +125,8 @@ ThanksMessage.prototype.update  = function(_json){
 
 	for (var i = 0; i < this.json.length; i++) {
 		console.log(this.json[i].question.question);
-		console.log(this.json[i].responses);
+		// console.log("CORRECT: " + this.json[i].question.correctAnswer);
+		// console.log(this.json[i].responses);
 	};
 
 }

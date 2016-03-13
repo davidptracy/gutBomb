@@ -152,7 +152,7 @@ function draw() {
 
 
 	if (thankYou.on){
-		if (idleTime > 5){
+		if (idleTime > 10){
 			idleTime = 0;
 			submitAnswers('/reset');
 			setTimeout(window.open("/", "_self"), 5);

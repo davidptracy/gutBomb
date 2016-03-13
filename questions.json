@@ -4,7 +4,7 @@
       {  
          "id":"1",
          "type":"multiple",
-         "question":"1. Which two words come to mind when you hear the word microbe?",
+         "question":"Which two words come to mind when you hear the word microbe?",
          "answers": [
             "Germ",
             "Disease",
@@ -14,7 +14,8 @@
             "Biodiversity"
             ],
          "image": [],
-         "descriptor": "subjective"
+         "descriptor": "subjective",
+         "correctAnswer": []
       },
       {  
          "id":"2",
@@ -28,11 +29,12 @@
             "I don’t know what hand sanitizer is"
          ],
          "image": [],
-         "descriptor": "subjective"
+         "descriptor": "subjective",
+         "correctAnswer": []
       },{
          "id": "3",
          "type": "multiple",
-         "question": "3.   Which of these is an antibiotic? Select as many as you like!",
+         "question": "Which of these is an antibiotic? Select as many as you like!",
          "answers": [
             "Aspirin",
             "Diazepam (e.g. Valium)",
@@ -41,7 +43,8 @@
             "Antihistamine (e.g. Benadryl)"
             ],
          "image" : [],
-         "descriptor": "objective"
+         "descriptor": "objective",
+         "correctAnswer": [0,0,0,1,0]
       },{  
          "id":"4",
          "type": "1",
@@ -53,7 +56,8 @@
             "Never"
             ],
          "image": [],
-         "descriptor": "subjective"
+         "descriptor": "subjective",
+         "correctAnswer": []
       },{
          "id": "5",
          "type": "1",
@@ -65,7 +69,8 @@
             "I wish I knew more."
             ],
             "image": [],
-         "descriptor": "subjective"
+         "descriptor": "subjective",
+         "correctAnswer": []
       },{
          "id": "6",
          "type": "1",
@@ -79,7 +84,8 @@
             "I decline to answer"
            ],
          "image": [],
-         "descriptor": "subjective"
+         "descriptor": "subjective",
+         "correctAnswer": []
       }
       ,{
          "id": "7",
@@ -91,7 +97,8 @@
             "I decline to answer"
            ],
          "image": [],
-         "descriptor": "subjective"
+         "descriptor": "subjective",
+         "correctAnswer": []
       }
       ,{
          "id": "8",
@@ -101,7 +108,8 @@
             "MapView"
            ],
          "image": [],
-         "descriptor": "subjective" 
+         "descriptor": "subjective",
+         "correctAnswer": [] 
       }
    ] 
 }
