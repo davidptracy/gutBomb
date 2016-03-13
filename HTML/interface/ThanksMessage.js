@@ -110,7 +110,10 @@ ThanksMessage.prototype.display  = function(){
 											tempAnswers = this.json[i].question.answers[j];
 											tempAnswers = tempAnswers.replace(/\s*\(.*?\)\s*/g, '');
 											console.log("INCORRECT ANSWER!");
-											translate(tempAnswerLength + 15, 0);
+											if (j > 0){
+												translate(tempAnswerLength + 15, 0);
+											};
+											// translate(tempAnswerLength + 15, 0);
 											textFont(museoSans100);
 											text(tempAnswers,0,0);
 											tempAnswerLength = textWidth(tempAnswers);
