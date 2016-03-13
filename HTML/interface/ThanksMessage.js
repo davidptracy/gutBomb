@@ -77,12 +77,57 @@ ThanksMessage.prototype.display  = function(){
 						//if it's an objective type question ...
 						//compare the responses array to the correct answers array
 
+						// console.log(this.json[i].question.descriptor);
+
+
 						if ( this.json[i].question.descriptor == "objective" ){
-							for (var j = 0; j < this.json[i].responses.length; j++){
-								if (this.json[i].responses[j] == this.json[i].question.correctAnswer[j]){
-									console.log("We have a match!");
-								}
-							}
+
+							// console.log("YOUR ANSWER ARRAY:     " + this.json[i].responses);
+							// console.log("CORRECT ANSWER ARRAY: " + this.json[i].question.correctAnswer);
+
+							push();
+								translate(0,25);
+								var tempAnswers = "";
+								tempAnswerLength = 0;
+								var answerCount = 0;
+
+								push();
+
+									for (var j = 0; j < this.json[i].responses.length; j++){
+										
+										if (this.json[i].responses[j] == this.json[i].question.correctAnswer[j]){
+											console.log("YOUR ANSWER:    " + this.json[i].responses[j]);
+											console.log("CORRECT ANSWER: " + this.json[i].question.correctAnswer[j]);
+											
+											fill(130,100,60);
+											tempAnswers = this.json[i].question.answers[j];
+											tempAnswers = tempAnswers.replace(/\s*\(.*?\)\s*/g, '');
+											if (j > 0){
+												translate(tempAnswerLength + 15, 0);
+											};
+									
+											textFont(museoSans500);
+											text(tempAnswers,0,0);
+											tempAnswerLength = textWidth(tempAnswers);
+											
+										}
+										else {
+											fill(0,100,60);
+											tempAnswers = this.json[i].question.answers[j];
+											tempAnswers = tempAnswers.replace(/\s*\(.*?\)\s*/g, '');
+											console.log("INCORRECT ANSWER!");
+											translate(tempAnswerLength + 15, 0);
+											textFont(museoSans100);
+											text(tempAnswers,0,0);
+											tempAnswerLength = textWidth(tempAnswers);
+										}
+									};
+
+								pop();
+
+								// textFont(museoSans100);
+								// text(tempAnswers,0,0);
+							pop();
 						} 
 
 						//if it's a subjective type question just list the responses
