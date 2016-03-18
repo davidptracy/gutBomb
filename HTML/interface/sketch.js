@@ -43,7 +43,7 @@ function setup() {
 	hue = 0;
 	setupColors();
 
-	// noCursor();
+	noCursor();
 
 	setupButtons();
 	navBar = new NavigationBar();
