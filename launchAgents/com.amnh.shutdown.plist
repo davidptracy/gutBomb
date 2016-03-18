@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+        <string>com.amnh.shutdown</string>
+    <key>ProgramArguments</key>
+       <array>
+            <string>/Users/sepakiosk/Documents/sepaKioskApp/shutdown.sh</string>
+       </array>
+    <key>StartCalendarInterval</key>
+		<dict>
+			<key>Hour</key>
+			<integer>18</integer>
+			<key>Minute</key>
+			<integer>50</integer>
+		</dict>
+</dict>
+</plist>
