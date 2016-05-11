@@ -290,7 +290,8 @@ function convertArrayOfObjectsToCSV(data) {
 
 }
 
-var cronJob = '45 18 * * *';            //minutes hours months weeks days
+//monday at 6:45 save out the last years worth of DB info
+var cronJob = '45 18 * * 1';            //minutes hours dayOfMonth weeks days
 
 crontab.scheduleJob(cronJob, function(){
 
