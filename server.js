@@ -295,7 +295,7 @@ var cronJob = '45 18 * * *';            //minutes hours months weeks days
 crontab.scheduleJob(cronJob, function(){
 
   var today = moment().startOf('day').local(),
-    lastWeek = moment(today).subtract(7,'days');
+    lastWeek = moment(today).subtract(365,'days');
     tomorrow = moment(today).add(1, 'days');
 
   Survey.find({
@@ -307,18 +307,5 @@ crontab.scheduleJob(cronJob, function(){
       }
   }).
   exec(process);
-
-  // var today = moment().startOf('day').local(),  
-  // lastWeek = moment(today).subtract(-7,'data');
-
-  // Survey.find({
-  //       surveyVersion: 'timestamp',
-
-  //     timedate: {
-  //       $gte: lastWeek.toDate(),
-  //       $lt: today.toDate()
-  //     }
-  // }).
-  // exec(process);
 
 });
