@@ -1,5 +1,6 @@
 // dummy JSON object for page load
-var jsonObject = {"question":{"id":"1","type":"multiple","question":"Which of the following are considered microbes?","answers":["mite","E. coli","Ebola","fruit fly","cockroach"],"image":["images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg","images/01/Ecoli.jpg"]},"responses":[],"length":17};
+var jsonObject = {"question":{"id":"1","type":"multiple","question":"","answers":[],"image":[]},"responses":[],"length":17};
+// var jsonObject {"question":{"id":"1","type":"","question":"","answers":[],"image":[]},"responses":[],"length":12};
 var created;
 var origin, width, height, margin, selected, requiredAnswers, hue;
 var currentQuestion;
