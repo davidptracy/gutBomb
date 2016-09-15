@@ -174,11 +174,11 @@ var submitSurvey = function(){
       console.log(mAnswer);
       newSurvey.answers[i] = mAnswer;
   }
+
   newSurvey.save(function (err) {
       if (err){
           console.log('Error on save!');
       }else{
-          console.log(newSurvey);
           console.log("Survey saved!");
       }
     });
@@ -187,11 +187,11 @@ var submitSurvey = function(){
 // find all surveys in date range
 app.get('/find', function(req, res){
 var today = moment().startOf('day').local(),
-    lastWeek = moment(today).subtract(-7,'data');
+    lastWeek = moment(today).subtract(365,'data');
     tomorrow = moment(today).add(1, 'days');
 
   Survey.find({
-        surveyVersion: 'timestamp',
+       // surveyVersion: 'v2',
 
       timedate: {
         $gte: lastWeek.toDate(),
@@ -205,6 +205,7 @@ var today = moment().startOf('day').local(),
 
 var process= function (err, results){
   if (err) return handleError(err);
+  console.log(results);
   console.log(convertArrayOfObjectsToCSV(results));
 }
 
@@ -227,6 +228,7 @@ function convertArrayOfObjectsToCSV(data) {
     // set up initial csv column keys
     var keys = "surveyVersion,timestamp" ;
     var allAnswers = questions.questions;
+    console.log(data);
     for( var i = 0; i<allAnswers.length; i++){
         for( var j = 0; j < allAnswers[i].answers.length; j++){
             var key = 'q';
@@ -251,6 +253,7 @@ function convertArrayOfObjectsToCSV(data) {
                   var n = 0;
                   allAnswers[j].answers.forEach(function(a){
                       result +=  '' + columnDelimiter;
+
                       n++;
                   });
             }else {
@@ -263,13 +266,20 @@ function convertArrayOfObjectsToCSV(data) {
                     result+= key + columnDelimiter;
                   }else if(answers[j].answers[x] == 0) {
                     result+= columnDelimiter;
+
+
                   }else{
                     result+=answers[j].answers[x] + columnDelimiter;
+
+
                   }
                 }
             }
         }
-        result += lineDelimiter
+        result += lineDelimiter;
+
+
+
     }
     var today = moment().startOf('day').local().format('MM-DD-YYYY');
     var name = "dbLogs/"+today + ".csv";
@@ -300,7 +310,7 @@ crontab.scheduleJob(cronJob, function(){
     tomorrow = moment(today).add(1, 'days');
 
   Survey.find({
-        surveyVersion: 'timestamp',
+       // surveyVersion: 'v1',
 
       timedate: {
         $gte: lastWeek.toDate(),
